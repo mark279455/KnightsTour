@@ -1,0 +1,33 @@
+#chessboard {
+    width: 352px;
+    height: 352px;
+    display: fles;
+  }
+  
+  .chess-square {
+    float: left;
+    width: 41px;
+    height: 41px;
+    background-color: #fff;
+    border: 1px solid #00FFFF;
+  }
+  
+  .blueBorder {
+    border: 1px solid blue;
+  }
+  
+  .whiteBackground {
+    background-color: #fff;
+  }
+  
+  .greenBackground {
+    background-color: #008000;
+  }
+  
+  .grayBackground {
+    background-color: #C0C0C0;
+  }
+  
+  .cyanBackground {
+    background-color: #00FFFF;
+  }
