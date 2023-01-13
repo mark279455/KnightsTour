@@ -11,7 +11,6 @@ const globalDebugLevel = 1;
 let lightColor = "#ffffff";
 let darkColor = "#00ffff";
 let hintColor = "#c0c0c0";
-let debug = true;
 createBoard();
 
 /**
@@ -32,28 +31,39 @@ function createBoard() {
     debugMessage(1, "window.innerWidth-10 = " + (window.innerWidth - 10));
     debugMessage(1, "(window.innerWidth-10)/width = " + (window.innerWidth - 10) / width);
     debugMessage(1, "Math.floor (window.innerWidth-10)/width = " + Math.floor((window.innerWidth - 10) / width));
+    // calculate square size from screen size
     let sqWidth = Math.floor((window.innerWidth - 10) / width);
     debugMessage(1, "window.innerWidth = " + window.innerHeight)
 
     for (var i = 0; i < height; i++) {
         for (var j = 0; j < width; j++) {
+            // create square and set params
             let chessSquare = document.createElement('div');
             chessSquare.className = 'square';
+
             chessSquare.style.width = (sqWidth - 2) + "px";
             debugMessage(2, "chessSquare width = " + chessSquare.style.width);
             chessSquare.style.height = (sqWidth - 2) + "px";
             chessSquare.id = getSquareId(i, j);
             chessSquare.dataset.visited = 0;
-
-            // for debugging only
-            if (debug) {
-                chessSquare.style.fontSize = "0.6rem";
-                chessSquare.textContent = chessSquare.id;
-            }
-            chessboard.appendChild(chessSquare);
             setSquareColor(chessSquare);
+
+            // shows square ids in square - for debugging only
+            chessSquare.style.fontSize = "0.6rem";
+            chessSquare.textContent = chessSquare.id;
+            // add to board
+            chessboard.appendChild(chessSquare);
         }
     }
+    // add event listeners to all squares
+    document.addEventListener("click", function listenAllSquares(event) {
+        // sets the square clicked to the global var currentSquare for this turn
+        currentSquare = document.getElementById(event.target.id);
+        if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+            setCurrentPosition();
+        }
+    });
+
     debugMessage(1, "\tcreateBoard() end");
 }
 
@@ -74,6 +84,7 @@ function getSquareId(n1, n2) {
  */
 function setSquareColor(squareElement) {
     debugMessage(2, "setSquareColor() start");
+    // if input is a string get the elemenet from the document
     if (typeof squareElement === "string") {
         squareElement = document.getElementById(squareElement);
     }
@@ -136,3 +147,53 @@ function rgb2hex(rgb) {
     }
     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
+
+/**
+ * driven from event listener click on square
+ * adds the knight icon to the square and calls getPossibleToMoveTo() to find nectpossible moves
+ */
+function setCurrentPosition() {
+    debugMessage(2, "\n\tsetCurrentPosition start");
+    // increment the number of moves
+    movesUsed++;
+    // put knight in square
+    currentSquare.innerHTML = "<i class='fa-solid fa-chess-knight'></i>";
+    debugMessage(3, "currentSquare.style.height = " + currentSquare.style.height);
+    // change size of knight according to square size
+    changeFontAwesomeFontSize();
+    // set the square background to remove the hint color
+    setSquareColor(currentSquare);
+    debugMessage(3, "currentSquare " + typeof currentSquare);
+    debugMessage(3, "currentPos move[" + movesUsed + "] = " + currentSquare.id);
+    // set this square as visited
+    setVisited();
+    // add formatting to square
+    currentSquare.classList.add("knight");
+    debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
+    // remove this square from the possible moves so we calculated before this move - no longer needed
+    debugMessage(2, "\tsetCurrentPosition end");
+}
+
+/**
+ * changes font awesome font size for the knight in the square according to the size of the square
+ * sets the font size to the square size - 10
+ */
+function changeFontAwesomeFontSize() {
+    debugMessage(2, "\n\tchangeFontAwesomeFontSize start");
+    const numberPattern = /\d+/g;
+    debugMessage(3, "currentSquare.height = " + currentSquare.style.height);
+    let squareSize = currentSquare.style.height.match(numberPattern);
+    debugMessage(3, "squareSize = " + squareSize);
+    let fontSize = (squareSize - 10) + "px";
+    debugMessage(3, "fontSize = " + fontSize);
+    currentSquare.style.fontSize = (squareSize - 10) + "px";
+    debugMessage(2, "\n\tchangeFontAwesomeFontSize end");
+}
+
+/**
+ * sets the attribute data-visited in the square - so we know we cant go there again
+ */
+function setVisited() {
+    currentSquare.dataset.visited = 1;
+}
+
