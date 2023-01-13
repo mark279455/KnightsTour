@@ -171,6 +171,8 @@ function setCurrentPosition() {
     currentSquare.classList.add("knight");
     debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
     // remove this square from the possible moves so we calculated before this move - no longer needed
+    // possibleToMoveTo = possibleToMoveTo.filter(item => item !== currentSquare.id)
+    getPossibleToMoveTo();
     debugMessage(2, "\tsetCurrentPosition end");
 }
 
@@ -197,3 +199,93 @@ function setVisited() {
     currentSquare.dataset.visited = 1;
 }
 
+/**
+ * gets the current global possibleToMoveTo array and removes hintColour from them
+ * gets all the squares me can move to from from currentSquare, puts them into global possibleToMoveTo array
+ * and sets them with hintColor background
+ */
+function getPossibleToMoveTo() {
+    debugMessage(2, "\tgetPossibleToMoveTo start");
+    clearOldPossibleMoves();
+    let col = parseInt(currentSquare.id.split("-")[0]);
+    let row = parseInt(currentSquare.id.split("-")[1]);
+    let moves = [-1, -2, -1, 2, -2, -1, -2, 1, 1, -2, 1, 2, 2, -1, 2, 1];
+    for (let m = 0; m < moves.length; m += 2) {
+        let v = moves[m];
+        let h = moves[m + 1];
+        if (isSquareInsideBoard(col + v, row + h)) {
+            let coord = (col + v) + "-" + (row + h);
+            if (!isVisited(coord)) {
+                possibleToMoveTo.push((col + v) + "-" + (row + h));
+            }
+        }
+    }
+    for (sq in possibleToMoveTo) {
+        let squareElement = document.getElementById(possibleToMoveTo[sq]);
+        squareElement.style.backgroundColor = hintColor;
+    }
+    // if no possible moves - game over
+    if (possibleToMoveTo.length === 0) {
+        gameOver();
+    }
+    debugMessage(2, "\tgetPossibleToMoveTo end");
+}
+/**
+ * are co-ordinates v - inside the limits of the board height and width
+ * @param {*} v 
+ * @param {*} h 
+ * @returns 
+ */
+function isSquareInsideBoard(v, h) {
+    debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
+    if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
+        return true;
+    }
+    return false;
+}
+
+
+/**
+ * have this square been visited - accents square element or string id
+ * @param {*} el 
+ * @returns 
+ */
+function isVisited(el) {
+    if (typeof el === "string") {
+        el = document.getElementById(el);
+    }
+    if (el.dataset.visited === "0") {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * removes hintColor from unpicked squares in possibleToMoveTo - and empties array
+ */
+function clearOldPossibleMoves() {
+    debugMessage(2, "\tclearOldPossibleMoves start");
+    debugMessage(3, "clearing " + possibleToMoveTo);
+    for (sq in possibleToMoveTo) {
+        debugMessage(3, "square: " + possibleToMoveTo[sq]);
+        if (!isVisited(possibleToMoveTo[sq])) {
+            setSquareColor(possibleToMoveTo[sq]);
+        }
+    }
+    possibleToMoveTo = [];
+    debugMessage(2, "\tclearOldPossibleMoves end");
+}
+
+
+
+/**
+ * game over
+ */
+function gameOver() {
+    debugMessage(2, "movesUsed = " + movesUsed);
+    if (movesUsed == 64) {
+        document.getElementById("gameover").textContent = "You completed the Knight's Tour";
+    } else {
+        document.getElementById("gameover").textContent = "Game Over - there are no more moves available, you made " + movesUsed + " moves.";
+    }
+}
