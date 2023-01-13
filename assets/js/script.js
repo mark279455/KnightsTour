@@ -293,9 +293,12 @@ function clearOldPossibleMoves() {
  */
 function gameOver() {
     debugMessage(2, "movesUsed = " + movesUsed);
+    let moves="";
+    for (sq in moveHistory)
+        moves += moveHistory[sq].id+","
     if (movesUsed == height * width) {
-        document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + height + " by " + width;
+        document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + height + " by " + width+".\n your moves were "+moves;
     } else {
-        document.getElementById("gameover").textContent = "Game Over - there are no more moves available, you made " + movesUsed + " moves out of a possible " + (height * width);
+        document.getElementById("gameover").textContent = "Game Over - there are no more moves available.\nYou made " + movesUsed + " moves out of a possible " + (height * width)+".\nYour moves were "+moves;
     }
 }
