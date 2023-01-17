@@ -14,37 +14,7 @@ let darkColor = "#C0C0C0";
 let hintColor = "#00ff00";
 let usedColor = "#ff0000";
 
-window.addEventListener('load', function () {
-    createBoard();
-})
-
-class Square {
-    constructor(rowNum, colNum, height, width) {
-        this.id = rowNum + "-" + colNum;
-        this.height = (height + 2) + "px";
-        this.width = (width + 2) + "px";
-        this.possibleToMoveTo = [];
-        this.classList = ['square'];
-        this.color = lightColor;
-        if ((rowNum + colNum) % 2 !== 0)
-            this.color = darkColor;
-        this.chessSquare = document.createElement('div');
-        this.chessSquare.style.width=this.width;
-        this.chessSquare.style.height=this.height;
-        this.chessSquare.style.backgroundColor = this.color;
-        document.getElementById('chessboard').appendChild(this.chessSquare);
-    }
-
-    show() {
-        return "id: " + this.id + "\n" +
-            "height: " + this.height + "\n" +
-            "width: " + this.width + "\n" +
-            "color: " + this.color + "\n" +
-            "possibleToMoveTo: " + this.possibleToMoveTo + "\n" +
-            "classList: " + this.classList + "\n";
-    }
-}
-
+createBoard();
 
 /**
  * draw chessboard on screen according to colors and values of height and width
@@ -71,25 +41,30 @@ function createBoard() {
     for (var i = 0; i < height; i++) {
         for (var j = 0; j < width; j++) {
             // create square and set params
-            //let chessSquare = document.createElement('div');
-            let square = new Square(i, j, sqWidth, sqWidth);
-            console.log(square.show());
+            let chessSquare = document.createElement('div');
+            chessSquare.className = 'square';
+
+            chessSquare.style.width = (sqWidth - 2) + "px";
+            debugMessage(2, "chessSquare width = " + chessSquare.style.width);
+            chessSquare.style.height = (sqWidth - 2) + "px";
+            chessSquare.id = getSquareId(i, j);
+            setSquareColor(chessSquare);
 
             // shows square ids in square - for debugging only
             // chessSquare.style.fontSize = "0.8rem";
             // chessSquare.textContent = chessSquare.id;
             // add to board
-            //chessboard.appendChild(chessSquare);
+            chessboard.appendChild(chessSquare);
         }
     }
     // add event listeners to all squares
-    // document.addEventListener("click", function listenAllSquares(event) {
-    //     // adds the square clicked to the global array moveHistory
-    //     if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
-    //         moveHistory.push(document.getElementById(event.target.id));
-    //         setCurrentPosition();
-    //     }
-    // });
+    document.addEventListener("click", function listenAllSquares(event) {
+        // adds the square clicked to the global array moveHistory
+        if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+            moveHistory.push(document.getElementById(event.target.id));
+            setCurrentPosition();
+        }
+    });
     debugMessage(1, "\tcreateBoard() end");
 }
 
@@ -103,6 +78,31 @@ function getSquareId(n1, n2) {
     return (n1 + 1) + "-" + (n2 + 1);
 }
 
+/**
+ * 
+ * @param {*} squareElement can be the dom Element of one of the squares on the board - or its id
+ * sets the color according to its id - if the sum of the 2 numbers is even - its a dark square - otherwise its light
+ */
+function setSquareColor(squareElement) {
+    debugMessage(2, "setSquareColor() start");
+    // if input is a string get the elemenet from the document
+    if (typeof squareElement === "string") {
+        squareElement = document.getElementById(squareElement);
+    }
+    let n1 = parseInt(squareElement.id.split("-")[0]);
+    let n2 = parseInt(squareElement.id.split("-")[1]);
+
+    if ((n1 + n2) % 2 !== 0) {
+        debugMessage(3, "setting [" + squareElement.id + "] to darkColor [" + darkColor + "]")
+        squareElement.style.backgroundColor = darkColor;
+    } else {
+        debugMessage(3, "setting [" + squareElement.id + "] to lightColor [" + lightColor + "]")
+        squareElement.style.backgroundColor = lightColor;
+    }
+    debugMessage(3, "color of [" + squareElement.id + "] is [" + squareElement.style.backgroundColor + "]")
+    debugMessage(3, "color of [" + squareElement.id + "] is [" + rgb2hex(squareElement.style.backgroundColor) + "]")
+    debugMessage(2, "setSquareColor() end");
+}
 
 /**
  * 
@@ -233,6 +233,12 @@ function getPossibleToMoveTo() {
     debugMessage(2, "\tgetPossibleToMoveTo end");
 }
 
+/**
+ * are co-ordinates v - inside the limits of the board height and width
+ * @param {*} v 
+ * @param {*} h 
+ * @returns 
+ */
 function isSquareInsideBoard(v, h) {
     debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
     if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {

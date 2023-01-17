@@ -38,7 +38,11 @@ header {
   flex-wrap: wrap;
 }
 
-.square {
+.square {}
+
+.row {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .knight {
