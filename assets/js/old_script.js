@@ -39,6 +39,8 @@ function createBoard() {
     debugMessage(1, "window.innerWidth = " + window.innerHeight)
 
     for (var i = 0; i < height; i++) {
+        let row = document.createElement('div');
+        row.classList.add("row");
         for (var j = 0; j < width; j++) {
             // create square and set params
             let chessSquare = document.createElement('div');
@@ -49,12 +51,13 @@ function createBoard() {
             chessSquare.style.height = (sqWidth - 2) + "px";
             chessSquare.id = getSquareId(i, j);
             setSquareColor(chessSquare);
+            row.appendChild(chessSquare);
 
             // shows square ids in square - for debugging only
             // chessSquare.style.fontSize = "0.8rem";
             // chessSquare.textContent = chessSquare.id;
             // add to board
-            chessboard.appendChild(chessSquare);
+            chessboard.appendChild(row);
         }
     }
     // add event listeners to all squares

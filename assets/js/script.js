@@ -1,8 +1,7 @@
 let chessboard = document.getElementById('chessboard');
-let possibleToMoveTo = [];
 let movesUsed = 0;
+let squares = {};
 let moveHistory = [];
-let currentSquare;
 let height = 8;
 let width = 8;
 const globalDebugLevel = 3;
@@ -20,19 +19,60 @@ window.addEventListener('load', function () {
 
 class Square {
     constructor(rowNum, colNum, height, width) {
+        this.rowNum = rowNum;
+        this.colNum = colNum;
         this.id = rowNum + "-" + colNum;
         this.height = (height + 2) + "px";
         this.width = (width + 2) + "px";
         this.possibleToMoveTo = [];
         this.classList = ['square'];
         this.color = lightColor;
-        if ((rowNum + colNum) % 2 !== 0)
+        if ((rowNum + colNum) % 2 !== 0) {
             this.color = darkColor;
+        }
         this.chessSquare = document.createElement('div');
-        this.chessSquare.style.width=this.width;
-        this.chessSquare.style.height=this.height;
+        this.chessSquare.style.width = this.width;
+        this.chessSquare.style.height = this.height;
         this.chessSquare.style.backgroundColor = this.color;
-        document.getElementById('chessboard').appendChild(this.chessSquare);
+        this.chessSquare.addEventListener("click", function listen(event) {
+            debugMessage(1, this.id + " clicked");
+            this.getPossibleToMoveTo();
+            if (this.possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+                moveHistory.push(document.getElementById(event.target.id));
+            }
+        });
+    }
+
+    getPossibleToMoveTo() {
+        debugMessage(1, "\tgetPossibleToMoveTo start");
+        let moves = [-1, -2, -1, 2, -2, -1, -2, 1, 1, -2, 1, 2, 2, -1, 2, 1];
+        for (let m = 0; m < moves.length; m += 2) {
+            let v = moves[m];
+            let h = moves[m + 1];
+            if (this.isSquareInsideBoard(col + v, row + h)) {
+                let coord = (col + v) + "-" + (row + h);
+                if (!isVisited(coord)) {
+                    possibleToMoveTo.push((col + v) + "-" + (row + h));
+                }
+            }
+        }
+        for (sq in possibleToMoveTo) {
+            let squareElement = document.getElementById(possibleToMoveTo[sq]);
+            squareElement.style.backgroundColor = hintColor;
+        }
+        // if no possible moves - game over
+        if (possibleToMoveTo.length === 0) {
+            gameOver();
+        }
+        debugMessage(1, "\tgetPossibleToMoveTo end");
+    }
+
+    isSquareInsideBoard(v, h) {
+        debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
+        if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
+            return true;
+        }
+        return false;
     }
 
     show() {
@@ -69,11 +109,16 @@ function createBoard() {
     debugMessage(1, "window.innerWidth = " + window.innerHeight)
 
     for (var i = 0; i < height; i++) {
+        let row = document.createElement('div');
+        row.classList.add("row");
         for (var j = 0; j < width; j++) {
             // create square and set params
             //let chessSquare = document.createElement('div');
             let square = new Square(i, j, sqWidth, sqWidth);
-            console.log(square.show());
+            squares[square.id] = square;
+            row.appendChild(square.chessSquare);
+
+            //console.log(square.show());
 
             // shows square ids in square - for debugging only
             // chessSquare.style.fontSize = "0.8rem";
@@ -81,6 +126,10 @@ function createBoard() {
             // add to board
             //chessboard.appendChild(chessSquare);
         }
+        // for (let id in squares) {
+        //     console.log(id + ": " + squares[id].show());
+        // }
+        chessboard.appendChild(row);
     }
     // add event listeners to all squares
     // document.addEventListener("click", function listenAllSquares(event) {
@@ -99,9 +148,9 @@ function createBoard() {
  * @param {*} n2 - an index from the build loop - the column number
  * @returns - concatenated string n1-n2
  */
-function getSquareId(n1, n2) {
-    return (n1 + 1) + "-" + (n2 + 1);
-}
+// function getSquareId(n1, n2) {
+//     return (n1 + 1) + "-" + (n2 + 1);
+// }
 
 
 /**
@@ -153,136 +202,136 @@ function rgb2hex(rgb) {
  * driven from event listener click on square
  * adds the knight icon to the square and calls getPossibleToMoveTo() to find nectpossible moves
  */
-function setCurrentPosition() {
-    debugMessage(2, "\n\tsetCurrentPosition start");
-    // set previous square's knight to black
-    if (moveHistory.length > 1) {
-        let lastSq = moveHistory[moveHistory.length - 2];
-        lastSq.getElementsByClassName("fa-chess-knight")[0].style.color = usedColor;
-        debugMessage(3, "removing square ref [" + lastSq.id + "] from moveHistory");
-    }
-    currentSquare = moveHistory[moveHistory.length - 1];
-    debugMessage(3, "currentSquare = [" + currentSquare.id + "]");
+// function setCurrentPosition() {
+//     debugMessage(2, "\n\tsetCurrentPosition start");
+//     // set previous square's knight to black
+//     if (moveHistory.length > 1) {
+//         let lastSq = moveHistory[moveHistory.length - 2];
+//         lastSq.getElementsByClassName("fa-chess-knight")[0].style.color = usedColor;
+//         debugMessage(3, "removing square ref [" + lastSq.id + "] from moveHistory");
+//     }
+//     currentSquare = moveHistory[moveHistory.length - 1];
+//     debugMessage(3, "currentSquare = [" + currentSquare.id + "]");
 
-    // increment the number of moves
-    movesUsed++;
-    // put knight in square
-    currentSquare.innerHTML = "<i class='fa-solid fa-chess-knight'></i>";
-    currentSquare.getElementsByClassName("fa-chess-knight")[0].style.color = "blue";
-    debugMessage(3, "currentSquare.style.height = " + currentSquare.style.height);
-    // change size of knight according to square size
-    changeFontAwesomeFontSize();
-    // set the square background to remove the hint color
-    setSquareColor(currentSquare);
-    debugMessage(3, "currentSquare " + typeof currentSquare);
-    debugMessage(3, "currentSquare move[" + movesUsed + "] = " + currentSquare.id);
-    // add formatting to square - also use classList.contins('knight') to see if its been visited already
-    currentSquare.classList.add("knight");
-    debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
-    // remove this square from the possible moves so we calculated before this move - no longer needed
-    // possibleToMoveTo = possibleToMoveTo.filter(item => item !== currentSquare.id)
-    getPossibleToMoveTo();
-    debugMessage(2, "\tsetCurrentPosition end");
-}
+//     // increment the number of moves
+//     movesUsed++;
+//     // put knight in square
+//     currentSquare.innerHTML = "<i class='fa-solid fa-chess-knight'></i>";
+//     currentSquare.getElementsByClassName("fa-chess-knight")[0].style.color = "blue";
+//     debugMessage(3, "currentSquare.style.height = " + currentSquare.style.height);
+//     // change size of knight according to square size
+//     changeFontAwesomeFontSize();
+//     // set the square background to remove the hint color
+//     setSquareColor(currentSquare);
+//     debugMessage(3, "currentSquare " + typeof currentSquare);
+//     debugMessage(3, "currentSquare move[" + movesUsed + "] = " + currentSquare.id);
+//     // add formatting to square - also use classList.contins('knight') to see if its been visited already
+//     currentSquare.classList.add("knight");
+//     debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
+//     // remove this square from the possible moves so we calculated before this move - no longer needed
+//     // possibleToMoveTo = possibleToMoveTo.filter(item => item !== currentSquare.id)
+//     getPossibleToMoveTo();
+//     debugMessage(2, "\tsetCurrentPosition end");
+// }
 
-/**
- * changes font awesome font size for the knight in the square according to the size of the square
- * sets the font size to the square size - 10
- */
-function changeFontAwesomeFontSize() {
-    debugMessage(2, "\tchangeFontAwesomeFontSize start");
-    const numberPattern = /\d+/g;
-    debugMessage(3, "currentSquare.height = " + currentSquare.style.height);
-    let squareSize = currentSquare.style.height.match(numberPattern);
-    debugMessage(3, "squareSize = " + squareSize);
-    let fontSize = (squareSize - 10) + "px";
-    debugMessage(3, "fontSize = " + fontSize);
-    currentSquare.style.fontSize = (squareSize - 10) + "px";
-    debugMessage(2, "\tchangeFontAwesomeFontSize end");
-}
+// /**
+//  * changes font awesome font size for the knight in the square according to the size of the square
+//  * sets the font size to the square size - 10
+//  */
+// function changeFontAwesomeFontSize() {
+//     debugMessage(2, "\tchangeFontAwesomeFontSize start");
+//     const numberPattern = /\d+/g;
+//     debugMessage(3, "currentSquare.height = " + currentSquare.style.height);
+//     let squareSize = currentSquare.style.height.match(numberPattern);
+//     debugMessage(3, "squareSize = " + squareSize);
+//     let fontSize = (squareSize - 10) + "px";
+//     debugMessage(3, "fontSize = " + fontSize);
+//     currentSquare.style.fontSize = (squareSize - 10) + "px";
+//     debugMessage(2, "\tchangeFontAwesomeFontSize end");
+// }
 
-/**
- * gets the current global possibleToMoveTo array and removes hintColour from them
- * gets all the squares me can move to from from currentSquare, puts them into global possibleToMoveTo array
- * and sets them with hintColor background
- */
-function getPossibleToMoveTo() {
-    debugMessage(2, "\tgetPossibleToMoveTo start");
-    clearOldPossibleMoves();
-    let col = parseInt(currentSquare.id.split("-")[0]);
-    let row = parseInt(currentSquare.id.split("-")[1]);
-    let moves = [-1, -2, -1, 2, -2, -1, -2, 1, 1, -2, 1, 2, 2, -1, 2, 1];
-    for (let m = 0; m < moves.length; m += 2) {
-        let v = moves[m];
-        let h = moves[m + 1];
-        if (isSquareInsideBoard(col + v, row + h)) {
-            let coord = (col + v) + "-" + (row + h);
-            if (!isVisited(coord)) {
-                possibleToMoveTo.push((col + v) + "-" + (row + h));
-            }
-        }
-    }
-    for (sq in possibleToMoveTo) {
-        let squareElement = document.getElementById(possibleToMoveTo[sq]);
-        squareElement.style.backgroundColor = hintColor;
-    }
-    // if no possible moves - game over
-    if (possibleToMoveTo.length === 0) {
-        gameOver();
-    }
-    debugMessage(2, "\tgetPossibleToMoveTo end");
-}
+// /**
+//  * gets the current global possibleToMoveTo array and removes hintColour from them
+//  * gets all the squares me can move to from from currentSquare, puts them into global possibleToMoveTo array
+//  * and sets them with hintColor background
+//  */
+// function getPossibleToMoveTo() {
+//     debugMessage(2, "\tgetPossibleToMoveTo start");
+//     clearOldPossibleMoves();
+//     let col = parseInt(currentSquare.id.split("-")[0]);
+//     let row = parseInt(currentSquare.id.split("-")[1]);
+//     let moves = [-1, -2, -1, 2, -2, -1, -2, 1, 1, -2, 1, 2, 2, -1, 2, 1];
+//     for (let m = 0; m < moves.length; m += 2) {
+//         let v = moves[m];
+//         let h = moves[m + 1];
+//         if (isSquareInsideBoard(col + v, row + h)) {
+//             let coord = (col + v) + "-" + (row + h);
+//             if (!isVisited(coord)) {
+//                 possibleToMoveTo.push((col + v) + "-" + (row + h));
+//             }
+//         }
+//     }
+//     for (sq in possibleToMoveTo) {
+//         let squareElement = document.getElementById(possibleToMoveTo[sq]);
+//         squareElement.style.backgroundColor = hintColor;
+//     }
+//     // if no possible moves - game over
+//     if (possibleToMoveTo.length === 0) {
+//         gameOver();
+//     }
+//     debugMessage(2, "\tgetPossibleToMoveTo end");
+// }
 
-function isSquareInsideBoard(v, h) {
-    debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
-    if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
-        return true;
-    }
-    return false;
-}
+// function isSquareInsideBoard(v, h) {
+//     debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
+//     if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
+//         return true;
+//     }
+//     return false;
+// }
 
-/**
- * have this square been visited - accents square element or string id
- * @param {*} el 
- * @returns 
- */
-function isVisited(el) {
-    if (typeof el === "string") {
-        el = document.getElementById(el);
-    }
-    if (el.classList.contains("knight")) {
-        return true;
-    }
-    return false;
-}
+// /**
+//  * have this square been visited - accents square element or string id
+//  * @param {*} el 
+//  * @returns 
+//  */
+// function isVisited(el) {
+//     if (typeof el === "string") {
+//         el = document.getElementById(el);
+//     }
+//     if (el.classList.contains("knight")) {
+//         return true;
+//     }
+//     return false;
+// }
 
-/**
- * removes hintColor from unpicked squares in possibleToMoveTo - and empties array
- */
-function clearOldPossibleMoves() {
-    debugMessage(2, "\tclearOldPossibleMoves start");
-    debugMessage(3, "clearing " + possibleToMoveTo);
-    for (sq in possibleToMoveTo) {
-        debugMessage(3, "square: " + possibleToMoveTo[sq]);
-        if (!isVisited(possibleToMoveTo[sq])) {
-            setSquareColor(possibleToMoveTo[sq]);
-        }
-    }
-    possibleToMoveTo = [];
-    debugMessage(2, "\tclearOldPossibleMoves end");
-}
+// /**
+//  * removes hintColor from unpicked squares in possibleToMoveTo - and empties array
+//  */
+// function clearOldPossibleMoves() {
+//     debugMessage(2, "\tclearOldPossibleMoves start");
+//     debugMessage(3, "clearing " + possibleToMoveTo);
+//     for (sq in possibleToMoveTo) {
+//         debugMessage(3, "square: " + possibleToMoveTo[sq]);
+//         if (!isVisited(possibleToMoveTo[sq])) {
+//             setSquareColor(possibleToMoveTo[sq]);
+//         }
+//     }
+//     possibleToMoveTo = [];
+//     debugMessage(2, "\tclearOldPossibleMoves end");
+// }
 
-/**
- * game over
- */
-function gameOver() {
-    debugMessage(2, "movesUsed = " + movesUsed);
-    let moves = "";
-    for (sq in moveHistory)
-        moves += moveHistory[sq].id + ","
-    if (movesUsed == height * width) {
-        document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + height + " by " + width + ".\n your moves were " + moves;
-    } else {
-        document.getElementById("gameover").textContent = "Game Over - there are no more moves available.\nYou made " + movesUsed + " moves out of a possible " + (height * width) + ".\nYour moves were " + moves;
-    }
-}
+// /**
+//  * game over
+//  */
+// function gameOver() {
+//     debugMessage(2, "movesUsed = " + movesUsed);
+//     let moves = "";
+//     for (sq in moveHistory)
+//         moves += moveHistory[sq].id + ","
+//     if (movesUsed == height * width) {
+//         document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + height + " by " + width + ".\n your moves were " + moves;
+//     } else {
+//         document.getElementById("gameover").textContent = "Game Over - there are no more moves available.\nYou made " + movesUsed + " moves out of a possible " + (height * width) + ".\nYour moves were " + moves;
+//     }
+// }

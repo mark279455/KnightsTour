@@ -33,16 +33,17 @@ header {
 }
 
 #chessboard {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  /* display: flex; */
 }
 
-.square {}
+.square {
+  aspect-ratio: auto 1 / 1; 
+}
 
 .row {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .knight {
