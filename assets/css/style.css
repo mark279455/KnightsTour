@@ -4,6 +4,10 @@
 :root {
   --white: #fffffff;
   --purple: #8000ff;
+  --purplemaroon: #800080;
+  --purpledark: #5a003c;
+  --purplepale: #ff8fea;
+  --purplemid: #ff80d5;
   --cyan: #00ffff;
   --gray: #c0c0c0;
   --pink: #ee31db;
@@ -12,20 +16,35 @@
   --boardColorLight: #ffffff;
 }
 
+html {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Merriweather Sans', sans-serif;
   background-color: lightsteelblue;
+  padding: 0;
+  margin: 0;
 }
 
 header {
   text-align: center;
-  color: var(--purple);
+  color: var(--purplemaroon);
 }
 
 #instructions {
   font-family: 'Lato', sans-serif;
-  color: var(--purple);
+  color: var(--purplemaroon);
   font-size: 1rem;
+}
+
+#setup-button {
+  background-color: var(--purplemaroon);
+  color: white;
+}
+
+#setup-input{
+  width: 8%;
 }
 
 .instructionsPara {
@@ -33,18 +52,13 @@ header {
 }
 
 #chessboard {
-  /* display: flex; */
+  background-color: var(--purpledark);
+  display: grid;
+  justify-items: center;
+  /* border: 1px solid red; */
 }
 
-.square {
-  aspect-ratio: auto 1 / 1; 
-}
-
-.row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-}
+.square {}
 
 .knight {
   display: flex;

@@ -1,14 +1,10 @@
 let chessboard = document.getElementById('chessboard');
-let possibleToMoveTo = [];
 let movesUsed = 0;
+let squares = {};
 let moveHistory = [];
-let currentSquare;
-let sizeOfBoard = 8;
-// let numSquaresHeight = numSquaresWidth;
-let maxWidth = 1000;
-let maxPadding = 20;
-let maxGap = 3;
-const globalDebugLevel = 1;
+let height = 8;
+let width = 8;
+const globalDebugLevel = 3;
 // let lightColor = "#00ffff";
 // let darkColor =  "#ee31db";
 // let hintColor = "#fefa67";
@@ -17,135 +13,150 @@ let darkColor = "#C0C0C0";
 let hintColor = "#00ff00";
 let usedColor = "#ff0000";
 
-document.getElementById("setup-button").addEventListener("click", function (event) {
-    getSizeAndGo();
-});
-document.getElementById("setup-input").addEventListener("keydown", function (event) {
-    if (event.key === "Enter")
-        getSizeAndGo();
-});
-createBoard();
-
-
-function getSizeAndGo() {
-    sizeOfBoard = parseInt(document.getElementById("setup-input").value);
-    document.getElementById("setup-input").value = sizeOfBoard;
+window.addEventListener('load', function () {
     createBoard();
+})
+
+class Square {
+    constructor(rowNum, colNum, height, width) {
+        this.rowNum = rowNum;
+        this.colNum = colNum;
+        this.id = rowNum + "-" + colNum;
+        this.height = (height + 2) + "px";
+        this.width = (width + 2) + "px";
+        this.possibleToMoveTo = [];
+        this.classList = ['square'];
+        this.color = lightColor;
+        if ((rowNum + colNum) % 2 !== 0) {
+            this.color = darkColor;
+        }
+        this.chessSquare = document.createElement('div');
+        this.chessSquare.style.width = this.width;
+        this.chessSquare.style.height = this.height;
+        this.chessSquare.style.backgroundColor = this.color;
+        this.chessSquare.addEventListener("click", function listen(event) {
+            debugMessage(1, this.id + " clicked");
+            this.getPossibleToMoveTo();
+            if (this.possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+                moveHistory.push(document.getElementById(event.target.id));
+            }
+        });
+    }
+
+    getPossibleToMoveTo() {
+        debugMessage(1, "\tgetPossibleToMoveTo start");
+        let moves = [-1, -2, -1, 2, -2, -1, -2, 1, 1, -2, 1, 2, 2, -1, 2, 1];
+        for (let m = 0; m < moves.length; m += 2) {
+            let v = moves[m];
+            let h = moves[m + 1];
+            if (this.isSquareInsideBoard(col + v, row + h)) {
+                let coord = (col + v) + "-" + (row + h);
+                if (!isVisited(coord)) {
+                    possibleToMoveTo.push((col + v) + "-" + (row + h));
+                }
+            }
+        }
+        for (sq in possibleToMoveTo) {
+            let squareElement = document.getElementById(possibleToMoveTo[sq]);
+            squareElement.style.backgroundColor = hintColor;
+        }
+        // if no possible moves - game over
+        if (possibleToMoveTo.length === 0) {
+            gameOver();
+        }
+        debugMessage(1, "\tgetPossibleToMoveTo end");
+    }
+
+    isSquareInsideBoard(v, h) {
+        debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
+        if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    show() {
+        return "id: " + this.id + "\n" +
+            "height: " + this.height + "\n" +
+            "width: " + this.width + "\n" +
+            "color: " + this.color + "\n" +
+            "possibleToMoveTo: " + this.possibleToMoveTo + "\n" +
+            "classList: " + this.classList + "\n";
+    }
 }
 
+
 /**
- * draw chessboard on screen according to colors and values of numSquaresHeight and numSquaresWidth
+ * draw chessboard on screen according to colors and values of height and width
  * also resizes according to viewport size
  */
 function createBoard() {
-    chessboard.innerHTML = "";
     debugMessage(1, "\tcreateBoard() start", true);
-    debugMessage(1, "window.innerWidth = " + window.innerWidth);
-    debugMessage(1, "window.innerHeight = " + window.innerHeight);
-    // make taller rather than wider
-    //    if (numSquaresWidth > numSquaresHeight)
-    //      [numSquaresWidth, numSquaresHeight] = [numSquaresHeight, numSquaresWidth];
-    // let screenwidth = window.innerWidth;
-    //let screenheight = window.innerHeight;
-    let screenwidth = window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth;
-    if (screenwidth > maxWidth)
-        screenwidth = maxWidth;
-    debugMessage(1, "sizeOfBoard = " + sizeOfBoard);
-    let boardPadding = Math.floor(screenwidth / 30);
-    if (boardPadding > maxPadding)
-        boardPadding = maxPadding;
-    let gridGap = Math.floor(screenwidth / 120);
-    if (gridGap > maxGap)
-        gridGap = maxGap;
-    let boardWidth = Math.floor(screenwidth) - (boardPadding * 2);
-    let sqWidth = Math.floor((boardWidth - (gridGap * sizeOfBoard)) / sizeOfBoard);
-    let sqHeight = sqWidth;
-    let boardHeight = boardWidth;
-    debugMessage(1, "boardWidth = " + boardWidth);
-    chessboard.style.width = boardWidth + "px";
+    debugMessage(1, "screen width = " + window.innerWidth);
+    debugMessage(1, "screen height = " + window.innerHeight);
+    debugMessage(1, "height = " + height);
+    debugMessage(1, "width = " + width);
+    debugMessage(1, "lightColor = " + lightColor);
+    debugMessage(1, "darkColor = " + darkColor);
+    debugMessage(1, "hintColor = " + hintColor);
     debugMessage(1, "chessboard.style.width = " + chessboard.style.width);
-    debugMessage(1, "boardHeight = " + boardHeight);
-    chessboard.style.height = boardHeight + "px";
     debugMessage(1, "chessboard.style.height = " + chessboard.style.height);
-    debugMessage(1, "boardPadding = " + boardPadding);
-    debugMessage(1, "gridGap = " + gridGap);
-    debugMessage(1, "sqWidth = " + sqWidth);
-    debugMessage(1, "sqHeight = " + sqHeight);
-    chessboard.style.gridTemplateColumns = "repeat(" + sizeOfBoard + ", 1fr)";
-    chessboard.style.gap = gridGap + "px";
-    chessboard.style.padding = boardPadding + "px";
-    for (var i = 0; i < sizeOfBoard; i++) {
-        for (var j = 0; j < sizeOfBoard; j++) {
-            // create square and set params
-            let chessSquare = document.createElement('div');
-            chessSquare.className = 'square';
+    debugMessage(1, "window.innerWidth-10 = " + (window.innerWidth - 10));
+    debugMessage(1, "(window.innerWidth-10)/width = " + (window.innerWidth - 10) / width);
+    debugMessage(1, "Math.floor (window.innerWidth-10)/width = " + Math.floor((window.innerWidth - 10) / width));
+    // calculate square size from screen size
+    let sqWidth = Math.floor((window.innerWidth - 10) / width);
+    debugMessage(1, "window.innerWidth = " + window.innerHeight)
 
-            chessSquare.style.width = sqWidth + "px";
-            //debugMessage(2, "chessSquare width = " + chessSquare.style.width);
-            chessSquare.style.height = sqHeight + "px";
-            chessSquare.id = getSquareId(i, j);
-            setSquareColor(chessSquare);
+    for (var i = 0; i < height; i++) {
+        let row = document.createElement('div');
+        row.classList.add("row");
+        for (var j = 0; j < width; j++) {
+            // create square and set params
+            //let chessSquare = document.createElement('div');
+            let square = new Square(i, j, sqWidth, sqWidth);
+            squares[square.id] = square;
+            row.appendChild(square.chessSquare);
+
+            //console.log(square.show());
 
             // shows square ids in square - for debugging only
             // chessSquare.style.fontSize = "0.8rem";
             // chessSquare.textContent = chessSquare.id;
             // add to board
-            chessboard.appendChild(chessSquare);
-            console.log("added id " + chessSquare.id);
+            //chessboard.appendChild(chessSquare);
         }
+        // for (let id in squares) {
+        //     console.log(id + ": " + squares[id].show());
+        // }
+        chessboard.appendChild(row);
     }
     // add event listeners to all squares
-    document.addEventListener("click", function listenAllSquares(event) {
-        // adds the square clicked to the global array moveHistory
-        debugMessage(1, "clicked: " + event.target.id);
-        if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
-            moveHistory.push(document.getElementById(event.target.id));
-            //   setCurrentPosition();
-        }
-    });
+    // document.addEventListener("click", function listenAllSquares(event) {
+    //     // adds the square clicked to the global array moveHistory
+    //     if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+    //         moveHistory.push(document.getElementById(event.target.id));
+    //         setCurrentPosition();
+    //     }
+    // });
     debugMessage(1, "\tcreateBoard() end");
 }
 
 /**
- *
+ * 
  * @param {*} n1 - an index from the build loop - the row number
  * @param {*} n2 - an index from the build loop - the column number
  * @returns - concatenated string n1-n2
  */
-function getSquareId(n1, n2) {
-    return (n1 + 1) + "-" + (n2 + 1);
-}
+// function getSquareId(n1, n2) {
+//     return (n1 + 1) + "-" + (n2 + 1);
+// }
+
 
 /**
- *
- * @param {*} squareElement can be the dom Element of one of the squares on the board - or its id
- * sets the color according to its id - if the sum of the 2 numbers is even - its a dark square - otherwise its light
- */
-function setSquareColor(squareElement) {
-    debugMessage(2, "setSquareColor() start");
-    // if input is a string get the elemenet from the document
-    if (typeof squareElement === "string") {
-        squareElement = document.getElementById(squareElement);
-    }
-    let n1 = parseInt(squareElement.id.split("-")[0]);
-    let n2 = parseInt(squareElement.id.split("-")[1]);
-
-    if ((n1 + n2) % 2 !== 0) {
-        debugMessage(3, "setting [" + squareElement.id + "] to darkColor [" + darkColor + "]")
-        squareElement.style.backgroundColor = darkColor;
-    } else {
-        debugMessage(3, "setting [" + squareElement.id + "] to lightColor [" + lightColor + "]")
-        squareElement.style.backgroundColor = lightColor;
-    }
-    debugMessage(3, "color of [" + squareElement.id + "] is [" + squareElement.style.backgroundColor + "]")
-    debugMessage(3, "color of [" + squareElement.id + "] is [" + rgb2hex(squareElement.style.backgroundColor) + "]")
-    debugMessage(2, "setSquareColor() end");
-}
-
-/**
- *
- * @param {} debugLevel
- * @param {*} message
+ * 
+ * @param {} debugLevel 
+ * @param {*} message 
  * controls what is logged to the console according to the constant globalDebugLevel and the passed argument debugLevel
  * feeds debugLevel without a new line
  */
@@ -154,10 +165,10 @@ function debugMessage(debugLevel, message) {
 }
 
 /**
- *
- * @param {*} debugLevel
- * @param {*} message
- * @param {*} newLine
+ * 
+ * @param {*} debugLevel 
+ * @param {*} message 
+ * @param {*} newLine 
  * controls what is logged to the console according to the constant globalDebugLevel and the passed argument debugLevel
  * feeds debugLevel with a new line
  */
@@ -174,8 +185,8 @@ function debugMessage(debugLevel, message, newLine) {
 }
 
 /**
- *
- * @param {*} rgb
+ * 
+ * @param {*} rgb 
  * @returns the detected rgb color as a hex code
  */
 function rgb2hex(rgb) {
@@ -201,7 +212,7 @@ function rgb2hex(rgb) {
 //     }
 //     currentSquare = moveHistory[moveHistory.length - 1];
 //     debugMessage(3, "currentSquare = [" + currentSquare.id + "]");
-//
+
 //     // increment the number of moves
 //     movesUsed++;
 //     // put knight in square
@@ -222,7 +233,7 @@ function rgb2hex(rgb) {
 //     getPossibleToMoveTo();
 //     debugMessage(2, "\tsetCurrentPosition end");
 // }
-//
+
 // /**
 //  * changes font awesome font size for the knight in the square according to the size of the square
 //  * sets the font size to the square size - 10
@@ -238,7 +249,7 @@ function rgb2hex(rgb) {
 //     currentSquare.style.fontSize = (squareSize - 10) + "px";
 //     debugMessage(2, "\tchangeFontAwesomeFontSize end");
 // }
-//
+
 // /**
 //  * gets the current global possibleToMoveTo array and removes hintColour from them
 //  * gets all the squares me can move to from from currentSquare, puts them into global possibleToMoveTo array
@@ -270,13 +281,7 @@ function rgb2hex(rgb) {
 //     }
 //     debugMessage(2, "\tgetPossibleToMoveTo end");
 // }
-//
-// /**
-//  * are co-ordinates v - inside the limits of the board height and width
-//  * @param {*} v
-//  * @param {*} h
-//  * @returns
-//  */
+
 // function isSquareInsideBoard(v, h) {
 //     debugMessage(2, "isSquareInsideBoard " + v + "/" + h);
 //     if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
@@ -284,11 +289,11 @@ function rgb2hex(rgb) {
 //     }
 //     return false;
 // }
-//
+
 // /**
 //  * have this square been visited - accents square element or string id
-//  * @param {*} el
-//  * @returns
+//  * @param {*} el 
+//  * @returns 
 //  */
 // function isVisited(el) {
 //     if (typeof el === "string") {
@@ -299,7 +304,7 @@ function rgb2hex(rgb) {
 //     }
 //     return false;
 // }
-//
+
 // /**
 //  * removes hintColor from unpicked squares in possibleToMoveTo - and empties array
 //  */
@@ -315,7 +320,7 @@ function rgb2hex(rgb) {
 //     possibleToMoveTo = [];
 //     debugMessage(2, "\tclearOldPossibleMoves end");
 // }
-//
+
 // /**
 //  * game over
 //  */

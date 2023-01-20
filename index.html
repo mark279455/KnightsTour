@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel='shortcut icon' type='image/x-icon' href='chess-knight.png' />
-    <title>Knights Tour</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel='shortcut icon' type='image/x-icon' href='chess-knight.png' />
+  <title>Knights Tour</title>
 </head>
+
 <body id="gamePage">
-    <header>
-      <h1>The Knight's Tour</h1>
-    </header>
-    <div id="chessboard"></div>
-    <div id="instructions">
-      <h2>Instructions</h2>
-      <p class="instructionsPara">Welcome to "The Knight's Tour". To play, you must move
-        a chess Knight around the board without landing on the same square twice.</p>
-      <p class="instructionsPara">The game will show you your available moves,
-        and you can change the colours by clicking settings.</p>
-    </div>
-  
-    <div id="gameover"></div>
-    <footer>
-    </footer>
-    <!-- font awesome script -->
-    <script src="https://kit.fontawesome.com/cd24aa886c.js" crossorigin="anonymous"></script>
-    <script src="assets/js/old_script.js"></script>
-  </body>
-  
+  <header>
+    <h1>The Knight's Tour</h1>
+  </header>
+  <!-- <div id="puzzle"> -->
+  <div id="chessboard"></div>
+  <!-- </div> -->
+  <div id="instructions">
+    <h2>Instructions</h2>
+    <p class="instructionsPara">Welcome to "The Knight's Tour". To play, you must move
+      a chess Knight around the board without landing on the same square twice.</p>
+    <p class="instructionsPara">The game will show you your available moves,
+      and you can change the size of the board below.</p>
+  </div>
+  <div id="setup">
+    <span><button id="setup-button" type="button" id="set">Start:</button> 
+      <input id="setup-input" type="text" name="size"
+        id="size" value="8" /></span>
+  </div>
+
+  <div id="gameover"></div>
+  <footer>
+  </footer>
+  <!-- font awesome script -->
+  <script src="https://kit.fontawesome.com/cd24aa886c.js" crossorigin="anonymous"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+
 </html>
