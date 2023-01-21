@@ -1,13 +1,14 @@
 let chessboard = document.getElementById('chessboard');
-let possibleToMoveTo = [];
+// let possibleToMoveTo = [];
+let sizeOfBoard = 8;
 let movesUsed = 0;
 let moveHistory = [];
-let currentSquare;
-let sizeOfBoard = 8;
+let squares = {};
+// let currentSquare;
 // let numSquaresHeight = numSquaresWidth;
-let maxWidth = 1000;
-let maxPadding = 20;
-let maxGap = 3;
+const maxWidth = 800;
+const maxPadding = 20;
+const maxGap = 3;
 const globalDebugLevel = 1;
 // let lightColor = "#00ffff";
 // let darkColor =  "#ee31db";
@@ -17,15 +18,42 @@ let darkColor = "#C0C0C0";
 let hintColor = "#00ff00";
 let usedColor = "#ff0000";
 
-document.getElementById("setup-button").addEventListener("click", function (event) {
-    getSizeAndGo();
-});
-document.getElementById("setup-input").addEventListener("keydown", function (event) {
-    if (event.key === "Enter")
-        getSizeAndGo();
-});
-createBoard();
 
+class Square {
+    constructor(rowNum, colNum, width) {
+        this.rowNum = rowNum;
+        this.colNum = colNum;
+        this.id = rowNum + "-" + colNum;
+        this.height = width + "px";
+        this.width = width + "px";
+        this.possibleToMoveTo = [];
+        this.classList = ['square'];
+        this.color = lightColor;
+        if ((rowNum + colNum) % 2 !== 0) {
+            this.color = darkColor;
+        }
+        this.chessSquare = document.createElement('div');
+        this.chessSquare.style.width = this.width;
+        this.chessSquare.style.height = this.height;
+        this.chessSquare.style.backgroundColor = this.color;
+        this.chessSquare.addEventListener("click", function listen(event) {
+            debugMessage(1, this.id + " [" + event.target.innerHTML + "] [" + this.show() + "] clicked");
+            this.getPossibleToMoveTo = getPossibleToMoveTo(this);
+            if (this.possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+                moveHistory.push(document.getElementById(event.target.id));
+            }
+        });
+    }
+
+    show() {
+        return "id: " + this.id + "\n" +
+            "height: " + this.height + "\n" +
+            "width: " + this.width + "\n" +
+            "color: " + this.color + "\n" +
+            "possibleToMoveTo: " + this.possibleToMoveTo + "\n" +
+            "classList: " + this.classList + "\n";
+    }
+}
 
 function getSizeAndGo() {
     sizeOfBoard = parseInt(document.getElementById("setup-input").value);
@@ -42,11 +70,6 @@ function createBoard() {
     debugMessage(1, "\tcreateBoard() start", true);
     debugMessage(1, "window.innerWidth = " + window.innerWidth);
     debugMessage(1, "window.innerHeight = " + window.innerHeight);
-    // make taller rather than wider
-    //    if (numSquaresWidth > numSquaresHeight)
-    //      [numSquaresWidth, numSquaresHeight] = [numSquaresHeight, numSquaresWidth];
-    // let screenwidth = window.innerWidth;
-    //let screenheight = window.innerHeight;
     let screenwidth = window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth;
     if (screenwidth > maxWidth)
         screenwidth = maxWidth;
@@ -61,11 +84,11 @@ function createBoard() {
     let sqWidth = Math.floor((boardWidth - (gridGap * sizeOfBoard)) / sizeOfBoard);
     let sqHeight = sqWidth;
     let boardHeight = boardWidth;
-    debugMessage(1, "boardWidth = " + boardWidth);
     chessboard.style.width = boardWidth + "px";
+    chessboard.style.height = boardHeight + "px";
+    debugMessage(1, "boardWidth = " + boardWidth);
     debugMessage(1, "chessboard.style.width = " + chessboard.style.width);
     debugMessage(1, "boardHeight = " + boardHeight);
-    chessboard.style.height = boardHeight + "px";
     debugMessage(1, "chessboard.style.height = " + chessboard.style.height);
     debugMessage(1, "boardPadding = " + boardPadding);
     debugMessage(1, "gridGap = " + gridGap);
@@ -74,37 +97,78 @@ function createBoard() {
     chessboard.style.gridTemplateColumns = "repeat(" + sizeOfBoard + ", 1fr)";
     chessboard.style.gap = gridGap + "px";
     chessboard.style.padding = boardPadding + "px";
+    addSquaresToBoard(sizeOfBoard, sqWidth);
+}
+
+function addSquaresToBoard(sizeOfBoard, sqWidth) {
+    let square = "fred";
     for (var i = 0; i < sizeOfBoard; i++) {
         for (var j = 0; j < sizeOfBoard; j++) {
-            // create square and set params
-            let chessSquare = document.createElement('div');
-            chessSquare.className = 'square';
-
-            chessSquare.style.width = sqWidth + "px";
-            //debugMessage(2, "chessSquare width = " + chessSquare.style.width);
-            chessSquare.style.height = sqHeight + "px";
-            chessSquare.id = getSquareId(i, j);
-            setSquareColor(chessSquare);
-
-            // shows square ids in square - for debugging only
-            // chessSquare.style.fontSize = "0.8rem";
-            // chessSquare.textContent = chessSquare.id;
-            // add to board
-            chessboard.appendChild(chessSquare);
-            console.log("added id " + chessSquare.id);
+            // let chessSquare = document.createElement('div');
+            // chessSquare.className = 'square';
+            // chessSquare.style.width = sqHeight + "px";
+            // chessSquare.style.height = sqHeight + "px";
+            // chessSquare.id = getSquareId(i, j);
+            // setSquareColor(chessSquare);
+            // chessboard.appendChild(chessSquare);
+            // console.log("added id " + chessSquare.id);
+            square = new Square(i, j, sqWidth);
+            squares[square.id] = square;
+            chessboard.appendChild(square.chessSquare);
         }
     }
-    // add event listeners to all squares
-    document.addEventListener("click", function listenAllSquares(event) {
-        // adds the square clicked to the global array moveHistory
-        debugMessage(1, "clicked: " + event.target.id);
-        if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
-            moveHistory.push(document.getElementById(event.target.id));
-            //   setCurrentPosition();
-        }
-    });
+    // document.addEventListener("click", function listenAllSquares(event) {
+    //     debugMessage(1, "clicked: " + event.target.id);
+    //     if (possibleToMoveTo.includes(event.target.id) || movesUsed === 0) {
+    //         moveHistory.push(document.getElementById(event.target.id));
+    //           setCurrentPosition();
+    //     }
+    // });
     debugMessage(1, "\tcreateBoard() end");
 }
+
+function getPossibleToMoveTo(square) {
+    debugMessage(1, "\tgetPossibleToMoveTo start");
+    let possibleToMoveTo = [];
+    let moves = [-1, -2, -1, 2, -2, -1, -2, 1, 1, -2, 1, 2, 2, -1, 2, 1];
+    for (let m = 0; m < moves.length; m += 2) {
+        let v = moves[m];
+        let h = moves[m + 1];
+        if (this.isSquareInsideBoard(square.colNum + v, square.rowNum + h)) {
+            if (!isVisited(square)) {
+                possibleToMoveTo.push((col + v) + "-" + (row + h));
+            }
+        }
+    }
+    console.log("possibleToMoveTo = " + possibleToMoveTo);
+    for (sq in possibleToMoveTo) {
+        let squareElement = document.getElementById(possibleToMoveTo[sq]);
+        squareElement.style.backgroundColor = hintColor;
+    }
+    // if no possible moves - game over
+    if (possibleToMoveTo.length === 0) {
+        console.log("gameOver()");
+    }
+    debugMessage(1, "\tgetPossibleToMoveTo end");
+    return possibleToMoveTo;
+
+}
+
+function isVisited(square) {
+    if (square.classList.contains("knight")) {
+        return true;
+    }
+    return false;
+}
+
+function isSquareInsideBoard(square) {
+    debugMessage(1, "isSquareInsideBoard " + square.id);
+    if (square.rowNum < sizeOfBoard && square.colNum < sizeOfBoard && square.rowNum > 0 && square.colNum > 0) {
+        return true;
+    }
+    return false;
+}
+
 
 /**
  *
@@ -186,6 +250,15 @@ function rgb2hex(rgb) {
     }
     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
+
+document.getElementById("setup-button").addEventListener("click", function (event) {
+    getSizeAndGo();
+});
+document.getElementById("setup-input").addEventListener("keydown", function (event) {
+    if (event.key === "Enter")
+        getSizeAndGo();
+});
+createBoard();
 
 /**
  * driven from event listener click on square
