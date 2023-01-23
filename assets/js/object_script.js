@@ -115,7 +115,7 @@ function createBoard() {
             // create square and set params
             //let chessSquare = document.createElement('div');
             let square = new Square(i, j, sqWidth, sqWidth);
-            squares[square.id] = square;
+            squareClasses[square.id] = square;
             row.appendChild(square.chessSquare);
 
             //console.log(square.show());
