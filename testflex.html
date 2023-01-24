@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/flex-style.css">
+    <link rel='shortcut icon' type='image/x-icon' href='chess-knight.png' />
+    <title>Flex Test</title>
+</head>
+
+<body>
+    <header>
+        <h1>The Knight's Tour</h1>
+    </header>
+    <div id="gamepage">
+        <div id="chessboard">
+            <div class="row">
+                <div class="square" id="1-1" style="background-color: rgb(255, 255, 255);">1-1</div>
+                <div class="square" id="1-2" style="background-color: rgb(192, 192, 192);">1-2</div>
+                <div class="square" id="1-3" style="background-color: rgb(255, 255, 255);">1-3</div>
+                <div class="square" id="1-4" style="background-color: rgb(192, 192, 192);">1-4</div>
+                <div class="square" id="1-5" style="background-color: rgb(255, 255, 255);">1-5</div>
+                <div class="square" id="1-6" style="background-color: rgb(192, 192, 192);">1-6</div>
+                <div class="square" id="1-7" style="background-color: rgb(255, 255, 255);">1-7</div>
+                <div class="square" id="1-8" style="background-color: rgb(192, 192, 192);">1-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="2-1" style="background-color: rgb(192, 192, 192);">2-1</div>
+                <div class="square" id="2-2" style="background-color: rgb(255, 255, 255);">2-2</div>
+                <div class="square" id="2-3" style="background-color: rgb(192, 192, 192);">2-3</div>
+                <div class="square" id="2-4" style="background-color: rgb(255, 255, 255);">2-4</div>
+                <div class="square" id="2-5" style="background-color: rgb(192, 192, 192);">2-5</div>
+                <div class="square" id="2-6" style="background-color: rgb(255, 255, 255);">2-6</div>
+                <div class="square" id="2-7" style="background-color: rgb(192, 192, 192);">2-7</div>
+                <div class="square" id="2-8" style="background-color: rgb(255, 255, 255);">2-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="3-1" style="background-color: rgb(255, 255, 255);">3-1</div>
+                <div class="square" id="3-2" style="background-color: rgb(192, 192, 192);">3-2</div>
+                <div class="square" id="3-3" style="background-color: rgb(255, 255, 255);">3-3</div>
+                <div class="square" id="3-4" style="background-color: rgb(192, 192, 192);">3-4</div>
+                <div class="square" id="3-5" style="background-color: rgb(255, 255, 255);">3-5</div>
+                <div class="square" id="3-6" style="background-color: rgb(192, 192, 192);">3-6</div>
+                <div class="square" id="3-7" style="background-color: rgb(255, 255, 255);">3-7</div>
+                <div class="square" id="3-8" style="background-color: rgb(192, 192, 192);">3-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="4-1" style="background-color: rgb(192, 192, 192);">4-1</div>
+                <div class="square" id="4-2" style="background-color: rgb(255, 255, 255);">4-2</div>
+                <div class="square" id="4-3" style="background-color: rgb(192, 192, 192);">4-3</div>
+                <div class="square" id="4-4" style="background-color: rgb(255, 255, 255);">4-4</div>
+                <div class="square" id="4-5" style="background-color: rgb(192, 192, 192);">4-5</div>
+                <div class="square" id="4-6" style="background-color: rgb(255, 255, 255);">4-6</div>
+                <div class="square" id="4-7" style="background-color: rgb(192, 192, 192);">4-7</div>
+                <div class="square" id="4-8" style="background-color: rgb(255, 255, 255);">4-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="5-1" style="background-color: rgb(255, 255, 255);">5-1</div>
+                <div class="square" id="5-2" style="background-color: rgb(192, 192, 192);">5-2</div>
+                <div class="square" id="5-3" style="background-color: rgb(255, 255, 255);">5-3</div>
+                <div class="square" id="5-4" style="background-color: rgb(192, 192, 192);">5-4</div>
+                <div class="square" id="5-5" style="background-color: rgb(255, 255, 255);">5-5</div>
+                <div class="square" id="5-6" style="background-color: rgb(192, 192, 192);">5-6</div>
+                <div class="square" id="5-7" style="background-color: rgb(255, 255, 255);">5-7</div>
+                <div class="square" id="5-8" style="background-color: rgb(192, 192, 192);">5-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="6-1" style="background-color: rgb(192, 192, 192);">6-1</div>
+                <div class="square" id="6-2" style="background-color: rgb(255, 255, 255);">6-2</div>
+                <div class="square" id="6-3" style="background-color: rgb(192, 192, 192);">6-3</div>
+                <div class="square" id="6-4" style="background-color: rgb(255, 255, 255);">6-4</div>
+                <div class="square" id="6-5" style="background-color: rgb(192, 192, 192);">6-5</div>
+                <div class="square" id="6-6" style="background-color: rgb(255, 255, 255);">6-6</div>
+                <div class="square" id="6-7" style="background-color: rgb(192, 192, 192);">6-7</div>
+                <div class="square" id="6-8" style="background-color: rgb(255, 255, 255);">6-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="7-1" style="background-color: rgb(255, 255, 255);">7-1</div>
+                <div class="square" id="7-2" style="background-color: rgb(192, 192, 192);">7-2</div>
+                <div class="square" id="7-3" style="background-color: rgb(255, 255, 255);">7-3</div>
+                <div class="square" id="7-4" style="background-color: rgb(192, 192, 192);">7-4</div>
+                <div class="square" id="7-5" style="background-color: rgb(255, 255, 255);">7-5</div>
+                <div class="square" id="7-6" style="background-color: rgb(192, 192, 192);">7-6</div>
+                <div class="square" id="7-7" style="background-color: rgb(255, 255, 255);">7-7</div>
+                <div class="square" id="7-8" style="background-color: rgb(192, 192, 192);">7-8</div>
+            </div>
+            <div class="row">
+                <div class="square" id="8-1" style="background-color: rgb(192, 192, 192);">8-1</div>
+                <div class="square" id="8-2" style="background-color: rgb(255, 255, 255);">8-2</div>
+                <div class="square" id="8-3" style="background-color: rgb(192, 192, 192);">8-3</div>
+                <div class="square" id="8-4" style="background-color: rgb(255, 255, 255);">8-4</div>
+                <div class="square" id="8-5" style="background-color: rgb(192, 192, 192);">8-5</div>
+                <div class="square" id="8-6" style="background-color: rgb(255, 255, 255);">8-6</div>
+                <div class="square" id="8-7" style="background-color: rgb(192, 192, 192);">8-7</div>
+                <div class="square" id="8-8" style="background-color: rgb(255, 255, 255);">8-8</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

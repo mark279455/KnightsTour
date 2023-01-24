@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#gamepage{
+    display: flex;
+    justify-content: center;
+}
+#chessboard {
+    width: 90%;
+    border: 5px solid red;
+    background-color: green;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+}
+
+.square {
+    flex-grow: 1;
+    aspect-ratio: 1 / 1 ;
+    /* min-height: 10px;
+    min-width: 10px;
+    max-height: 300px;
+    max-width: 300px; */
+}
