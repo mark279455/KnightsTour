@@ -28,23 +28,28 @@ function createBoard() {
     for (var i = 0; i < height; i++) {
         let row = document.createElement('div');
         row.classList.add("row");
+        chessboard.appendChild(row);
         for (var j = 0; j < width; j++) {
             // create square and set params
             let chessSquare = document.createElement('div');
             chessSquare.classList.add('square');
             //chessSquare.style.width = (sqWidth - 2) + "px";
-            debugMessage(2, "chessSquare width = " + chessSquare.style.width);
+            // debugMessage(2, "chessSquare width = " + chessSquare.style.width);
             //chessSquare.style.height = (sqWidth - 2) + "px";
             chessSquare.id = getSquareId(i, j);
             setSquareColor(chessSquare);
             row.appendChild(chessSquare);
+
+            // if ((j + i) % 2 === 0)
+            //     addKnightImgToSquare(chessSquare.id, "blue");
+            // else
+            //     addKnightImgToSquare(chessSquare.id, "red");
 
             // shows square ids in square - for debugging only
             // chessSquare.style.fontSize = "0.8rem";
             // chessSquare.textContent = chessSquare.id;
             // add to board
         }
-        chessboard.appendChild(row);
     }
     debugMessage(1, "screen width = " + window.innerWidth);
     debugMessage(1, "screen height = " + window.innerHeight);
@@ -161,7 +166,13 @@ function setCurrentPosition() {
     // set previous square's knight to black
     if (moveHistory.length > 1) {
         let lastSq = moveHistory[moveHistory.length - 2];
-        lastSq.getElementsByClassName("fa-chess-knight")[0].style.color = usedColor;
+        // lastSq.getElementsByClassName("fa-chess-knight")[0].style.color = usedColor;
+
+        for (mh in moveHistory)
+            console.log("moveHistory = " + moveHistory[mh].id);
+        // lastSq.getElementsByClassName("knight")[0].style.color = usedColor;
+        // lastSq.getElementsByClassName("knight")[0].style.color = usedColor;
+        addKnightImgToSquare(lastSq.id, "red");
         debugMessage(3, "removing square ref [" + lastSq.id + "] from moveHistory");
     }
     currentSquare = moveHistory[moveHistory.length - 1];
@@ -169,7 +180,7 @@ function setCurrentPosition() {
 
     // increment the number of moves
     movesUsed++;
-    addKnightToSquare();
+    addKnightImgToSquare(currentSquare.id, "blue");
     // set the square background to remove the hint color
     setSquareColor(currentSquare);
     debugMessage(3, "currentSquare " + typeof currentSquare);
@@ -190,14 +201,16 @@ function setCurrentPosition() {
 function addKnightToSquare() {
     // put knight in square
     let scrollWidth = currentSquare.scrollWidth;
+    currentSquare.style.maxWidth = scrollWidth + "px";
     console.log("currentSquare scrollWidth before knight = " + currentSquare.scrollWidth);
     console.log("currentSquare scrollHeight before knight = " + currentSquare.scrollHeight);
-    currentSquare.innerHTML = "<i class='fa-solid fa-chess-knight'></i>";
-    currentSquare.getElementsByClassName("fa-chess-knight")[0].style.color = "blue";
-    debugMessage(3, "currentSquare.style.height = " + currentSquare.style.height);
-    console.log("currentSquare.style.height = " + currentSquare.style.height);
+    // currentSquare.innerHTML = "<i class='fa-solid fa-chess-knight'></i>";
+    currentSquare.innerHTML = '<img src="assets/images/blue-knight-r.png" alt="blue knight">';
+    // currentSquare.getElementsByClassName("fa-chess-knight")[0].style.color = "blue";
+    // debugMessage(3, "currentSquare.style.height = " + currentSquare.style.height);
+    // console.log("currentSquare.style.height = " + currentSquare.style.height);
     // change size of knight according to square size
-    let newScrollWidth = currentSquare.scrollWidth;
+    // let newScrollWidth = currentSquare.scrollWidth;
 
     // debugMessage(2, "\tchangeFontAwesomeFontSize start");
     // const numberPattern = /\d+/g;
@@ -206,13 +219,28 @@ function addKnightToSquare() {
     // debugMessage(3, "squareSize = " + squareSize);
     // console.log("currentSquare height = " + document.getElementById(currentSquare.id).style.height);
     // console.log("currentSquare width = " + document.getElementById(currentSquare.id).style.width);
-    console.log("currentSquare old scrollWidth = " + scrollWidth);
-    console.log("currentSquare new scrollWidth = " + newScrollWidth);
+    // console.log("currentSquare old scrollWidth = " + scrollWidth);
+    // console.log("currentSquare new scrollWidth = " + newScrollWidth);
     //console.log("knight fontsize = " + currentSquare.style.fontSize);
     //let fontSize = (squareSize - 10) + "px";
     // debugMessage(3, "fontSize = " + fontSize);
-    currentSquare.style.fontSize = (newScrollWidth - 10) + "px";
+    // currentSquare.style.fontSize = (newScrollWidth - 10) + "px";
+    // currentSquare.style.fontSize = 1.8 + "rem";
     debugMessage(2, "\tchangeFontAwesomeFontSize end");
+}
+
+function addKnightImgToSquare(id, color) {
+    console.log("addKnightImgToSquare(" + id + ", " + color + ")");
+    let sq = document.getElementById(id);
+    switch (color) {
+        case "red":
+            sq.style.backgroundImage="url(../assets/images/red-knight-r.png)"; 
+            break;
+        default:
+            sq.style.backgroundImage="url(../assets/images/blue-knight-r.png)"; 
+            break;
+    }
+    sq.classList.add("knight" + color);
 }
 
 /**

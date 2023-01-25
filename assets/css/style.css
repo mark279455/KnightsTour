@@ -69,7 +69,17 @@ header {
 }
 
 .knight {
+  flex-grow: 1;
   padding: 0;
   border: 0;
   margin: 0;
+}
+
+/* img{
+  width: 80%;
+  object-fit: cover;
+} */
+img {
+  max-width: 100%;
+  height: auto;
 }
