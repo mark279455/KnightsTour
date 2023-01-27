@@ -8,8 +8,9 @@
   --gray: #c0c0c0;
   --pink: #ee31db;
   --textcolor: #165b11;
-  --boardColorDark: #00ff37;
-  --boardColorLight: #ffffff;
+  --boardcolor-dark: #00ff37;
+  --boardcolor-light: #ffffff;
+  --boardcolor-wood: #966f33;
 }
 
 * {
@@ -26,6 +27,15 @@ body {
 header {
   text-align: center;
   color: var(--purple);
+}
+
+#gameend {
+  color: var(--purple);
+  padding: 1rem;
+}
+
+#gameend div {
+  margin: 1rem 0;
 }
 
 #instructions {
@@ -45,12 +55,12 @@ header {
 }
 
 #chessboard {
+  background-color: var(--boardcolor-wood);
+  border: 10px solid var(--boardcolor-wood);
+  gap: 1px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  border: 25px solid green;
-  background-color: green;
-  gap: 3px;
 }
 
 .row {
@@ -58,37 +68,13 @@ header {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
-  gap: 3px;
+  gap: 1px;
 }
 
 .square {
   background-size: cover;
-  /* max-width: 100%; */
-  /* flex-grow: 1;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
 }
 
-.knight {
-  /* flex-grow: 1; */
-  /* padding: 0;
-  border: 0;
-  margin: 0; */
-}
-
-/* img{
-  width: 80%;
-  object-fit: cover;
-} */
 img {
   max-width: 100%;
-    /* position:absolute; */
-  z-index: -1;
-  /*height: auto;
-  background-size: contain;
-  background-repeat: no-repeat;
-  object-fit: fill; */
-
 }

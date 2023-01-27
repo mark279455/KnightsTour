@@ -1,48 +1,45 @@
-let chessboard = document.getElementById('chessboard');
-let possibleToMoveTo = [];
+let chessBoard = document.getElementById('chessboard');
 let movesUsed = 0;
+let currentSquare;
+let possibleToMoveTo = [];
 let allSquares = {};
 let moveHistory = [];
-let currentSquare;
-let height = 8;
-let width = 8;
-const globalDebugLevel = 0;
-const imageset = 3;
+let boardSize = 8;
+const minBoardSize = 3;
+const maxBoardSize = 15;
+const maxWidth = 800;
+const maxPadding = 20;
+const maxGap = 3;
+const globalDebugLevel = 1;
+let imageSet = 3;
 let lightColor = "#ffffff";
 let darkColor = "#C0C0C0";
 let hintColor = "#00ff00";
-let usedColor = "#ff0000";
 
 createBoard();
 
 function createBoard() {
     debugMessage(1, "\tcreateBoard() start", true);
-
-    for (var i = 0; i < height; i++) {
+    imageSet = Math.floor((Math.random() * 3) + 1);
+    for (var i = 0; i < boardSize; i++) {
         let row = document.createElement('div');
         row.classList.add("row");
-        chessboard.appendChild(row);
-        for (var j = 0; j < width; j++) {
+        chessBoard.appendChild(row);
+        for (var j = 0; j < boardSize; j++) {
             let chessSquare = document.createElement('div');
             chessSquare.classList.add('square');
             chessSquare.id = i + "-" + j;
             setSquareColor(chessSquare);
             row.appendChild(chessSquare);
-            chessSquare.innerHTML = '<img src="../assets/images/knights-set' + imageset + '/blank.png">';
+            chessSquare.innerHTML = '<img src="../assets/images/knights-set' + imageSet + '/blank.png">';
             allSquares[chessSquare.id] = chessSquare;
         }
     }
     debugMessage(1, "screen width = " + window.innerWidth);
     debugMessage(1, "screen height = " + window.innerHeight);
-    debugMessage(1, "height = " + height);
-    debugMessage(1, "width = " + width);
-    debugMessage(1, "lightColor = " + lightColor);
-    debugMessage(1, "darkColor = " + darkColor);
-    debugMessage(1, "hintColor = " + hintColor);
-    debugMessage(1, "1-1 scrollWidth = " + document.getElementById("1-1").scrollWidth);
-    debugMessage(1, "1-1 scrollHeight = " + document.getElementById("1-1").scrollHeight);
-    document.addEventListener("click", function (event) {
-        if (movesUsed === 0 || possibleToMoveTo.includes(event.target.parentElement)) {
+    debugMessage(1, "boardsize = " + boardSize);
+    document.addEventListener("click", function allSquares(event) {
+        if (event.target.parentElement.id && (movesUsed === 0 || possibleToMoveTo.includes(event.target.parentElement))) {
             debugMessage(1, "clicked " + event.target.parentElement.id);
             moveHistory.push(document.getElementById(event.target.parentElement.id));
             setCurrentPosition();
@@ -51,74 +48,61 @@ function createBoard() {
     debugMessage(1, "\tcreateBoard() end");
 }
 
-function setSquareColor(squareElement) {
+function setSquareColor(chessSquare) {
     debugMessage(2, "setSquareColor() start");
-    // if (typeof squareElement === "string") {
-    //     squareElement = document.getElementById(squareElement);
-    // }
-    let n1 = parseInt(squareElement.id.split("-")[0]);
-    let n2 = parseInt(squareElement.id.split("-")[1]);
+    let n1 = parseInt(chessSquare.id.split("-")[0]);
+    let n2 = parseInt(chessSquare.id.split("-")[1]);
 
     if ((n1 + n2) % 2 !== 0) {
-        debugMessage(3, "setting [" + squareElement.id + "] to darkColor [" + darkColor + "]")
-        squareElement.style.backgroundColor = darkColor;
+        debugMessage(3, "setting [" + chessSquare.id + "] to darkColor [" + darkColor + "]")
+        chessSquare.style.backgroundColor = darkColor;
     } else {
-        debugMessage(3, "setting [" + squareElement.id + "] to lightColor [" + lightColor + "]")
-        squareElement.style.backgroundColor = lightColor;
+        debugMessage(3, "setting [" + chessSquare.id + "] to lightColor [" + lightColor + "]")
+        chessSquare.style.backgroundColor = lightColor;
     }
-    debugMessage(3, "color of [" + squareElement.id + "] is [" + squareElement.style.backgroundColor + "]")
+    debugMessage(3, "color of [" + chessSquare.id + "] is [" + chessSquare.style.backgroundColor + "]")
     debugMessage(2, "setSquareColor() end");
 }
 
 function setCurrentPosition() {
-    debugMessage(2, "\n\tsetCurrentPosition start");
+    debugMessage(1, "\n\tsetCurrentPosition start");
     if (moveHistory.length > 1) {
-        let lastSq = moveHistory[moveHistory.length - 2];
-
-        for (mh in moveHistory)
-            console.log("moveHistory = " + moveHistory[mh].id);
-        addKnightImgToSquare(lastSq.id, "red");
-        debugMessage(3, "removing square ref [" + lastSq.id + "] from moveHistory");
+        addKnightToSquare(getLastMove(), "red");
+        debugMessage(3, "removing square ref [" + getLastMove().id + "] from moveHistory");
     }
     currentSquare = moveHistory[moveHistory.length - 1];
     debugMessage(3, "currentSquare = [" + currentSquare.id + "]");
-
     movesUsed++;
-    addKnightImgToSquare(currentSquare.id, "blue");
+    addKnightToSquare(currentSquare, "blue");
     setSquareColor(currentSquare);
-    debugMessage(3, "currentSquare " + typeof currentSquare);
     debugMessage(3, "currentSquare move[" + movesUsed + "] = " + currentSquare.id);
     currentSquare.classList.add("knight");
     debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
     getPossibleToMoveTo();
-    debugMessage(2, "\tsetCurrentPosition end");
+    debugMessage(1, "\tsetCurrentPosition end");
 }
 
+function getLastMove() {
+    return moveHistory[moveHistory.length - 2];
+}
 
-// function addKnightToSquare() {
-//     let scrollWidth = currentSquare.scrollWidth;
-//     currentSquare.style.maxWidth = scrollWidth + "px";
-//     console.log("currentSquare scrollWidth before knight = " + currentSquare.scrollWidth);
-//     console.log("currentSquare scrollHeight before knight = " + currentSquare.scrollHeight);
-//     currentSquare.innerHTML = '<img src="assets/images/blue-knight-r.png" alt="blue knight">';
-//     debugMessage(2, "\tchangeFontAwesomeFontSize end");
-// }
-
-function addKnightImgToSquare(id, color) {
-    console.log("addKnightImgToSquare(" + id + ", " + color + ")");
-    let sq = document.getElementById(id);
+function addKnightToSquare(chessSquare, color, invert) {
+    debugMessage(2, "addKnightToSquare(" + chessSquare.id + ", " + color + ", " + invert + ")");
     switch (color) {
         case "red":
-            sq.style.backgroundImage = "url(../assets/images/knights-set" + imageset + "/red-knight-l.png)";
+            if (invert)
+                chessSquare.style.backgroundImage = "url(../assets/images/knights-set" + imageSet + "/red-knight-l-inv.png)";
+            else
+                chessSquare.style.backgroundImage = "url(../assets/images/knights-set" + imageSet + "/red-knight-l.png)";
             break;
         default:
-            sq.style.backgroundImage = "url(../assets/images/knights-set" + imageset + "/blue-knight-l.png)";
+            if (invert)
+                chessSquare.style.backgroundImage = "url(../assets/images/knights-set" + imageSet + "/blue-knight-l-inv.png)";
+            else
+                chessSquare.style.backgroundImage = "url(../assets/images/knights-set" + imageSet + "/blue-knight-l.png)";
             break;
-
     }
-    sq.classList.add("knight" + color);
-    console.log("addKnightImgToSquare(" + id + ", " + color + ") done");
-
+    debugMessage(2, "addKnightToSquare(" + chessSquare.id + ", " + color + ") done");
 }
 
 function getPossibleToMoveTo() {
@@ -130,19 +114,15 @@ function getPossibleToMoveTo() {
     for (let m = 0; m < moves.length; m += 2) {
         let v = moves[m];
         let h = moves[m + 1];
-        if (isSquareInsideBoard(col + v, row + h)) {
-            let coord = (col + v) + "-" + (row + h);
-            if (!isVisited(coord)) {
-                console.log("pushing: " + (col + v) + "-" + (row + h));
-                possibleToMoveTo.push(allSquares[(col + v) + "-" + (row + h)]);
+        let coord = (col + v) + "-" + (row + h);
+        if (allSquares[coord]) {
+            if (!isVisited(allSquares[coord])) {
+                possibleToMoveTo.push(allSquares[coord]);
             }
         }
     }
-    console.log("possibleToMoveTo.length = " + possibleToMoveTo.length);
     for (sq in possibleToMoveTo) {
-        console.log("possible squares = " + possibleToMoveTo[sq].id);
-        // let squareElement = document.getElementById(possibleToMoveTo[sq]);
-        // squareElement.style.backgroundColor = hintColor;
+        debugMessage(2, "possible squares = " + possibleToMoveTo[sq].id);
         possibleToMoveTo[sq].style.backgroundColor = hintColor;
     }
 
@@ -152,29 +132,15 @@ function getPossibleToMoveTo() {
     debugMessage(1, "\tgetPossibleToMoveTo end");
 }
 
-
-function isSquareInsideBoard(v, h) {
-    debugMessage(1, "isSquareInsideBoard " + v + "/" + h);
-    if (h < width + 1 && v < height + 1 && h > 0 && v > 0) {
-        console.log("returning: " + true);
-        return true;
-    }
-    console.log("returning: " + false);
-    return false;
-}
-
-function isVisited(el) {
-    if (typeof el === "string") {
-        el = document.getElementById(el);
-    }
-    if (el.classList.contains("knight")) {
+function isVisited(chesssquare) {
+    if (chesssquare.classList.contains("knight")) {
         return true;
     }
     return false;
 }
 
 function clearOldPossibleMoves() {
-    debugMessage(2, "\tclearOldPossibleMoves start");
+    debugMessage(1, "\tclearOldPossibleMoves start");
     debugMessage(3, "clearing " + possibleToMoveTo);
     for (sq in possibleToMoveTo) {
         debugMessage(3, "square: " + possibleToMoveTo[sq]);
@@ -183,19 +149,26 @@ function clearOldPossibleMoves() {
         }
     }
     possibleToMoveTo = [];
-    debugMessage(2, "\tclearOldPossibleMoves end");
+    debugMessage(1, "\tclearOldPossibleMoves end");
 }
 
 function gameOver() {
-    debugMessage(2, "movesUsed = " + movesUsed);
+    debugMessage(1, "gameOver() start");
     let moves = "";
-    for (sq in moveHistory)
+    for (sq in moveHistory) {
         moves += moveHistory[sq].id + ","
-    if (movesUsed == height * width) {
-        document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + height + " by " + width + ".\n your moves were " + moves;
-    } else {
-        document.getElementById("gameover").textContent = "Game Over - there are no more moves available.\nYou made " + movesUsed + " moves out of a possible " + (height * width) + ".\nYour moves were " + moves;
     }
+    moves = moves.substring(0, moves.length - 1);
+    if (movesUsed == Math.pow(boardSize, 2)) {
+        document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + boardSize + " by " + boardSize + ".";
+    } else {
+        for (sq in moveHistory) {
+            addKnightToSquare(moveHistory[sq], "red", true);
+        }
+        addKnightToSquare(currentSquare, "blue", true);
+        document.getElementById("gameover").textContent = "Game Over - there are no more moves available. You made " + movesUsed + " moves out of a possible " + (Math.pow(boardSize, 2)) + ".";
+    }
+    document.getElementById("moves").textContent = "Your moves were " + moves;
 }
 
 function debugMessage(debugLevel, message) {
@@ -213,3 +186,30 @@ function debugMessage(debugLevel, message, newLine) {
         }
     }
 }
+
+function getSizeAndGo() {
+    chessBoard.innerHTML = "";
+    boardSize = parseInt(document.getElementById("setup-input").value);
+    if (boardSize > maxBoardSize) {
+        boardSize = maxBoardSize;
+    }
+    if (boardSize < minBoardSize) {
+        boardSize = minBoardSize;
+    }
+    document.getElementById("setup-input").value = boardSize;
+    moveHistory = [];
+    allSquares = {};
+    possibleToMoveTo = [];
+    movesUsed = 0;
+    document.getElementById("gameover").textContent = "";
+    document.getElementById("moves").textContent = "";
+    createBoard();
+}
+
+document.getElementById("setup-button").addEventListener("click", function (event) {
+    getSizeAndGo();
+});
+document.getElementById("setup-input").addEventListener("keydown", function (event) {
+    if (event.key === "Enter")
+        getSizeAndGo();
+});

@@ -1,5 +1,5 @@
 let chessboard = document.getElementById('chessboard');
-let sizeOfBoard = 8;
+let boardSize = 8;
 let movesUsed = 0;
 let moveHistory = [];
 let squareClasses = {};
@@ -52,14 +52,14 @@ class Square {
 }
 
 function getSizeAndGo() {
-    sizeOfBoard = parseInt(document.getElementById("setup-input").value);
-    if (sizeOfBoard > maxBoardSize) {
-        sizeOfBoard = maxBoardSize;
+    boardSize = parseInt(document.getElementById("setup-input").value);
+    if (boardSize > maxBoardSize) {
+        boardSize = maxBoardSize;
     }
-    if (sizeOfBoard < minBoardSize) {
-        sizeOfBoard = minBoardSize;
+    if (boardSize < minBoardSize) {
+        boardSize = minBoardSize;
     }
-    document.getElementById("setup-input").value = sizeOfBoard;
+    document.getElementById("setup-input").value = boardSize;
     moveHistory = [];
     squareClasses = {};
     createBoard();
@@ -120,7 +120,7 @@ function createBoard() {
     let screenwidth = window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth;
     if (screenwidth > maxWidth)
         screenwidth = maxWidth;
-    debugMessage(1, "sizeOfBoard = " + sizeOfBoard);
+    debugMessage(1, "sizeOfBoard = " + boardSize);
     let boardPadding = Math.floor(screenwidth / 30);
     if (boardPadding > maxPadding)
         boardPadding = maxPadding;
@@ -128,7 +128,7 @@ function createBoard() {
     if (gridGap > maxGap)
         gridGap = maxGap;
     let boardWidth = Math.floor(screenwidth) - (boardPadding * 2);
-    let sqWidth = Math.floor((boardWidth - (gridGap * sizeOfBoard)) / sizeOfBoard);
+    let sqWidth = Math.floor((boardWidth - (gridGap * boardSize)) / boardSize);
     let sqHeight = sqWidth;
     let boardHeight = boardWidth;
     chessboard.style.width = boardWidth + "px";
@@ -141,10 +141,10 @@ function createBoard() {
     debugMessage(1, "gridGap = " + gridGap);
     debugMessage(1, "sqWidth = " + sqWidth);
     debugMessage(1, "sqHeight = " + sqHeight);
-    chessboard.style.gridTemplateColumns = "repeat(" + sizeOfBoard + ", 1fr)";
+    chessboard.style.gridTemplateColumns = "repeat(" + boardSize + ", 1fr)";
     chessboard.style.gap = gridGap + "px";
     chessboard.style.padding = boardPadding + "px";
-    addSquaresToBoard(sizeOfBoard, sqWidth);
+    addSquaresToBoard(boardSize, sqWidth);
 }
 
 function addSquaresToBoard(sizeOfBoard, sqWidth) {
