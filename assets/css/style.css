@@ -27,6 +27,7 @@ body {
 header {
   text-align: center;
   color: var(--purple);
+  padding: 1rem 0;
 }
 
 #gameend {
@@ -42,10 +43,12 @@ header {
   font-family: 'Lato', sans-serif;
   color: var(--purple);
   font-size: 1rem;
+  padding: 1rem;
 }
 
 .instructionspara {
   font-size: 0.8rem;
+  padding: 1rem;
 }
 
 #gamediv {
@@ -56,11 +59,10 @@ header {
 
 #chessboard {
   background-color: var(--boardcolor-wood);
-  border: 10px solid var(--boardcolor-wood);
-  gap: 1px;
-  width: 100%;
+  border: 1rem solid var(--boardcolor-wood);
   display: flex;
   flex-wrap: wrap;
+  max-width: 700px;
 }
 
 .row {
@@ -68,7 +70,6 @@ header {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
-  gap: 1px;
 }
 
 .square {
@@ -77,4 +78,8 @@ header {
 
 img {
   max-width: 100%;
+}
+
+#setup-input{
+  width: 2rem;
 }

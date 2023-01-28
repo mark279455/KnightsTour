@@ -7,7 +7,7 @@ let moveHistory = [];
 let boardSize = 8;
 const minBoardSize = 3;
 const maxBoardSize = 15;
-const maxWidth = 800;
+const maxWidth = 700;
 const maxPadding = 20;
 const maxGap = 3;
 const globalDebugLevel = 1;
@@ -15,11 +15,13 @@ let imageSet = 3;
 let lightColor = "#ffffff";
 let darkColor = "#C0C0C0";
 let hintColor = "#00ff00";
+let woodColor = "#966f33";
 
 createBoard();
 
 function createBoard() {
     debugMessage(1, "\tcreateBoard() start", true);
+    let screenWidth = window.innerWidth;
     imageSet = Math.floor((Math.random() * 3) + 1);
     for (var i = 0; i < boardSize; i++) {
         let row = document.createElement('div');
@@ -38,6 +40,10 @@ function createBoard() {
     debugMessage(1, "screen width = " + window.innerWidth);
     debugMessage(1, "screen height = " + window.innerHeight);
     debugMessage(1, "boardsize = " + boardSize);
+    if (screenWidth > maxWidth){
+        chessBoard.style.width = maxWidth + "px";
+        chessBoard.style.maxWidth = maxWidth + "px";
+    }
     document.addEventListener("click", function allSquares(event) {
         if (event.target.parentElement.id && (movesUsed === 0 || possibleToMoveTo.includes(event.target.parentElement))) {
             debugMessage(1, "clicked " + event.target.parentElement.id);
