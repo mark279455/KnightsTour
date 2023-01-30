@@ -10,7 +10,7 @@ const maxBoardSize = 15;
 const maxWidth = 700;
 const maxPadding = 20;
 const maxGap = 3;
-const globalDebugLevel = 1;
+const globalDebugLevel = 0;
 let imageSet = 3;
 let lightColor = "#ffffff";
 let darkColor = "#C0C0C0";
@@ -34,14 +34,13 @@ function createBoard() {
             setSquareColor(chessSquare);
             row.appendChild(chessSquare);
             chessSquare.innerHTML = '<img src="./assets/images/knights-set' + imageSet + '/blank.png">';
-            console.log("loading ./assets/images/knights-set' + imageSet + '/blank.png");
             allSquares[chessSquare.id] = chessSquare;
         }
     }
     debugMessage(1, "screen width = " + window.innerWidth);
     debugMessage(1, "screen height = " + window.innerHeight);
     debugMessage(1, "boardsize = " + boardSize);
-    if (screenWidth > maxWidth){
+    if (screenWidth > maxWidth) {
         chessBoard.style.width = maxWidth + "px";
         chessBoard.style.maxWidth = maxWidth + "px";
     }
@@ -97,24 +96,19 @@ function addKnightToSquare(chessSquare, color, invert) {
     debugMessage(2, "addKnightToSquare(" + chessSquare.id + ", " + color + ", " + invert + ")");
     switch (color) {
         case "red":
-            if (invert){
+            if (invert) {
                 chessSquare.style.backgroundImage = "url(./assets/images/knights-set" + imageSet + "/red-knight-l-inv.png)";
-                console.log("loading ./assets/images/knights-set" + imageSet + "/red-knight-l-inv.png");
-            }else{
+            } else {
                 chessSquare.style.backgroundImage = "url(./assets/images/knights-set" + imageSet + "/red-knight-l.png)";
-                console.log("loading ./assets/images/knights-set" + imageSet + "/red-knight-l.png");
+            }
             break;
-            }
         default:
-            if (invert){
+            if (invert) {
                 chessSquare.style.backgroundImage = "url(./assets/images/knights-set" + imageSet + "/blue-knight-l-inv.png)";
-                console.log("loading ./assets/images/knights-set" + imageSet + "/blue-knight-l-inv.png");
-            }
-            else{
+            } else {
                 chessSquare.style.backgroundImage = "url(./assets/images/knights-set" + imageSet + "/blue-knight-l.png)";
-                console.log("loading ./assets/images/knights-set" + imageSet + "/blue-knight-l.png");
             }
-                break;
+            break;
     }
     debugMessage(2, "addKnightToSquare(" + chessSquare.id + ", " + color + ") done");
 }
