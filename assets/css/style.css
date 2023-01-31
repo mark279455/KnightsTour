@@ -11,11 +11,8 @@
   --boardcolor-dark: #00ff37;
   --boardcolor-light: #ffffff;
   --boardcolor-wood: #966f33;
-  /* --background: #f19336;*/
   --foreground: #0916cc;
   --background: #EFFA1B;
-  /* --background: white;
-  --foreground: black;*/
 }
 
 * {
@@ -30,28 +27,18 @@ body {
 }
 
 header {
-  text-align: center;
   color: var(--foreground);
-  padding: 1rem 0;
+  padding: 1rem 2rem;
 }
 
-#gameend {
-  color: var(--foreground);
-  padding: 1rem;
-}
-
-#gameend div {
-  margin: 1rem 0;
-}
-
-#instructions {
+#infosection {
   font-family: 'Lato', sans-serif;
   color: var(--foreground);
   font-size: 1.5rem;
   padding: 1rem;
 }
 
-.instructionspara {
+.info {
   font-size: 1.2rem;
   padding: 1rem;
 }
@@ -108,4 +95,15 @@ img {
 
 #setup-input {
   width: 5rem;
+}
+
+@media screen and (min-width: 640px) {
+
+  #gamediv {
+    display: block;
+    margin-left: 20px;
+    /* justify-content: start;
+    align-items: center; */
+  }
+  
 }

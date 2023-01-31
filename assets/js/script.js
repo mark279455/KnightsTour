@@ -3,9 +3,9 @@ const minBoardSize = 4;
 // maximum size of board - kind of meaningless when less than 4
 const maxBoardSize = 15;
 // max width of board - so that for a reasonable size screen the wold board is visible
-const maxWidth = 700;
+const maxWidth = 600;
 // level of debugging to console.log
-const globalDebugLevel = 1;
+const globalDebugLevel = 0;
 
 // chessboard Element
 let chessBoard = document.getElementById('chessboard');
@@ -33,11 +33,9 @@ let hintColor = "#00ff00";
 let woodColor = "#966f33";
 
 // create a board when the page loads - wait for DOM to load first
-// document.addEventListener("DOMContentLoaded", function () {
-//     createBoard();
-// });
-console.log("create board from start");
-createBoard();
+document.addEventListener("DOMContentLoaded", function () {
+    createBoard();
+});
 
 /**
  * create the chessboard with the size of boardSize
@@ -81,6 +79,8 @@ function createBoard() {
         chessBoard.style.width = maxWidth + "px";
         chessBoard.style.maxWidth = maxWidth + "px";
     }
+    // write instructions
+    writeInstructions();
     // add eventlistener to the document
     document.addEventListener("click", function allSquares(event) {
         // filter events - if calling element's parent has an id AND
@@ -95,6 +95,27 @@ function createBoard() {
         }
     });
     debugMessage(1, "\tcreateBoard() end");
+}
+
+/**
+ * writes instructions to infosection #info1 #info2 and #info3
+ */
+function writeInstructions() {
+    writeInfoSectionHeading("Instructions");
+    document.getElementById("info1").textContent = 'Welcome to \"The Knight\'s Tour\". To play, you must move a chess Knight around the board, and land on every square without landing on the same square twice.'
+    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board below."
+    document.getElementById("info3").textContent = "Click on any square to start."
+}
+
+/**
+ * write heading of Instructions or Game Over Section (infosection)
+ * @param {*} heading 
+ */
+function writeInfoSectionHeading(heading) {
+    let infoSection = document.getElementById("infosection");
+    let h2Elements = infoSection.querySelectorAll("h2");
+    for (h2 in h2Elements)
+        h2Elements[h2].textContent = heading;
 }
 
 /**
@@ -277,6 +298,8 @@ function clearOldPossibleMoves() {
  */
 function gameOver() {
     debugMessage(1, "gameOver() start");
+    // write heading for Game over section (#infosection)
+    writeInfoSectionHeading("Game Over");
     // create string to display moves
     let moves = "";
     for (sq in moveHistory) {
@@ -285,9 +308,9 @@ function gameOver() {
     }
     // replace trailing comma with full stop
     moves = moves.substring(0, moves.length - 1) + ".";
-    // if moves used = boardSize squared - we hit every square - announce result to player
+    // if moves used = boardSize squared - we hit every square - announce result to player in #info1
     if (movesUsed == Math.pow(boardSize, 2)) {
-        document.getElementById("gameover").textContent = "You completed a Knight's Tour of " + boardSize + " by " + boardSize + ".";
+        document.getElementById("info1").textContent = "You completed a Knight's Tour of " + boardSize + " by " + boardSize + ".";
     } else {
         // we didnt hit every square - invert all the red knights on the board
         for (sq in moveHistory) {
@@ -295,11 +318,13 @@ function gameOver() {
         }
         // we didnt hit every square - invert the last knight on the board - the blue one
         addKnightToSquare(currentSquare, "blue", true);
-        // announce result to player
-        document.getElementById("gameover").textContent = "Game Over - there are no more moves available. You made " + movesUsed + " moves out of a possible " + (Math.pow(boardSize, 2)) + ".";
+        // announce result to player in #info1
+        document.getElementById("info1").textContent = "There are no more moves available. You made " + movesUsed + " moves out of a possible " + (Math.pow(boardSize, 2)) + ".";
     }
-    // display historic moves to player 
-    document.getElementById("moves").textContent = "Your moves were " + moves;
+    // display historic moves to player in #info2
+    document.getElementById("info2").textContent = "Your moves were " + moves;
+    // clear #info3
+    document.getElementById("info3").textContent = "";
 }
 
 /**
@@ -329,13 +354,11 @@ function debugMessage(debugLevel, message, newLine) {
 
 function getSizeAndGo() {
     // set the new boardSize to the value in "setup-input"
-    console.log("value = " + document.getElementById("setup-input").value);
     let newBoardSize = parseInt(document.getElementById("setup-input").value);
     // if entered value not a number
     if (isNaN(newBoardSize)) {
         alert("Please enter a number greater than " + (minBoardSize - 1) + " and less than " + (maxBoardSize + 1) + ".");
         document.getElementById("setup-input").value = "";
-        console.log("339 alert issued");
     } else {
         // restart game
         // clear the old board
@@ -357,14 +380,9 @@ function getSizeAndGo() {
         allSquares = {};
         possibleToMoveTo = [];
         movesUsed = 0;
-        // clear results text
-        document.getElementById("gameover").textContent = "";
-        document.getElementById("moves").textContent = "";
         // create new game
-        console.log("create board from getSizeAndGo()");
         createBoard();
     }
-    console.log("getSizeAndGo() END boardSize = " + boardSize);
 }
 
 
