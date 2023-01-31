@@ -11,8 +11,11 @@
   --boardcolor-dark: #00ff37;
   --boardcolor-light: #ffffff;
   --boardcolor-wood: #966f33;
-  --background: #f19336;
+  /* --background: #f19336;*/
   --foreground: #0916cc;
+  --background: #EFFA1B;
+  /* --background: white;
+  --foreground: black;*/
 }
 
 * {
@@ -104,5 +107,5 @@ img {
 }
 
 #setup-input {
-  width: 2rem;
+  width: 5rem;
 }

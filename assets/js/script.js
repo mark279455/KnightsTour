@@ -5,7 +5,7 @@ const maxBoardSize = 15;
 // max width of board - so that for a reasonable size screen the wold board is visible
 const maxWidth = 700;
 // level of debugging to console.log
-const globalDebugLevel = 3;
+const globalDebugLevel = 1;
 
 // chessboard Element
 let chessBoard = document.getElementById('chessboard');
@@ -33,9 +33,11 @@ let hintColor = "#00ff00";
 let woodColor = "#966f33";
 
 // create a board when the page loads - wait for DOM to load first
-document.addEventListener("DOMContentLoaded", function () {
-    createBoard();
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//     createBoard();
+// });
+console.log("create board from start");
+createBoard();
 
 /**
  * create the chessboard with the size of boardSize
@@ -326,16 +328,20 @@ function debugMessage(debugLevel, message, newLine) {
  */
 
 function getSizeAndGo() {
-    // clear the old board
-    chessBoard.innerHTML = "";
     // set the new boardSize to the value in "setup-input"
     console.log("value = " + document.getElementById("setup-input").value);
-    boardSize = parseInt(document.getElementById("setup-input").value);
+    let newBoardSize = parseInt(document.getElementById("setup-input").value);
     // if entered value not a number
-    if (isNaN(boardSize))
+    if (isNaN(newBoardSize)) {
         alert("Please enter a number greater than " + (minBoardSize - 1) + " and less than " + (maxBoardSize + 1) + ".");
-    else {
+        document.getElementById("setup-input").value = "";
+        console.log("339 alert issued");
+    } else {
         // restart game
+        // clear the old board
+        chessBoard.innerHTML = "";
+        // set new board size from input value
+        boardSize = newBoardSize;
         // limit to maxBoardSize
         if (boardSize > maxBoardSize) {
             boardSize = maxBoardSize;
@@ -355,8 +361,10 @@ function getSizeAndGo() {
         document.getElementById("gameover").textContent = "";
         document.getElementById("moves").textContent = "";
         // create new game
+        console.log("create board from getSizeAndGo()");
         createBoard();
     }
+    console.log("getSizeAndGo() END boardSize = " + boardSize);
 }
 
 

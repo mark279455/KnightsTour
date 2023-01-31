@@ -1,108 +1,313 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Quicksilver IT Site
 
-Welcome mark279455,
+README.md file for my Code Institutute first project.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+![Techsini](documentation/testing/techsini.JPG)
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+I decided to do a simple design for a company that I used to own.
+Quicksilver IT Ltd provided IT support for small businesses in Hertfordshire.
 
-## Gitpod Reminders
+The site is designed to show potential customers what services the company offers, and encourage them to contact the company.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+It is hosted on Github here [Quicksilver IT](https://mark279455.github.io/Quicksilver-IT/index.html)
 
-`python3 -m http.server`
+[Mark Cooper QuicksilverIT Github Repository](https://github.com/mark279455/Quicksilver-IT)
 
-A blue button should appear to click: _Make Public_,
+## Technology Used
 
-Another blue button should appear to click: _Open Browser_.
+HTML
+CSS
+Google Fonts
+Font Awesome icons (these require javascript)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+## Credits
 
-A blue button should appear to click: _Make Public_,
+Cedits are due to...
+Gareth_mentor for his advice and recommendations.
+Daisy_mentor and Cheryl_Phillips_5P for their tips and help during the November Hackathon.
+ger_ci for help and advice with flexbox and grid.
 
-Another blue button should appear to click: _Open Browser_.
+## Design
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+The site consists of 3 responsive pages.
+index.html
+service.html
+contactus.html
 
-To log into the Heroku toolbelt CLI:
+### Colours
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+The Company's logo was a green Q - this is the text colour for the site.
+A complementary colour has been added with a keyboard as a background.
+These are:
+#165B11 as text colour.
+#a5f4dc as background
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+### Typography
 
-------
+The fonts used are from Google Fonts.
+They are:
+Montserrat - sans-serif
+Ubuntu - sans-serif
 
-## Release History
+The creator is ot a fan of serif fonts.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+### Background Image
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
-
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
-
-**July 2 2021:** Remove extensions that are not available in Open VSX.
-
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+the background image is one the creator took of his daughter's laptop.
 
 ---
+## Wireframes
 
-Happy coding!
+
+Wireframes were created using Balsamiq for the following screen widths:
+
+320 - 420 px wide
+421 = 672 px wide
+672 and wider
+
+### Index.html - less than 420px
+
+
+![Home Page](documentation/wireframes/index-420.png)
+
+
+### Index.html - 421 to 672px
+
+![Home Page](documentation/wireframes/index-421-672.png)
+
+
+
+### Index.html - 673px and wider
+
+![Home Page](documentation/wireframes/index-673+.png)
+
+
+
+### services.html - less than 420px
+
+
+![Home Page](documentation/wireframes/services-420.png)
+
+
+### services.html - 421 to 672px
+
+![Home Page](documentation/wireframes/services-421-672.png)
+
+
+
+### services.html - 673px and wider
+
+![Home Page](documentation/wireframes/services-673+.png)
+
+
+
+### contactus.html - less than 420px
+
+
+![Home Page](documentation/wireframes/contactus-420.png)
+
+
+### contactus.html - 421 to 672px
+
+![Home Page](documentation/wireframes/contactus-421-672.png)
+
+
+
+### contactus.html - 673px and wider
+
+![Home Page](documentation/wireframes/contactus-673+.png)
+
+
+---
+## Features
+
+### Features on all pages
+
+1.  Naviagion from the header to each page.
+    * Home
+    * Services
+    * Readme
+
+    The header stays at the top of all displays all the time.
+    This changes from a horizontal list at less than 763px and a vertical list on the right over 762px.
+    These also highlight to show which page is currently loaded.
+
+2.  Social Media Icons in the footer that have tooltips to describe them on hover.
+    The footer stays at the bottom of all displays all the time.
+
+### Index.html
+
+1.  Three sections that attend to 3 subjects.
+
+    *   A sales section
+        This contains a list of problems that the user may have with their current IT Support Company.
+        It also has a blinking line telling the user that poor IT Support is costing money.
+
+        As the screen width increases, the font size increases.
+
+    *   A section that describes why Quicksilver IT is different.
+        This describes some details about who Quicksilver IT are and how they operate.
+
+        As the screen width increases, these containers change from a column arragement to a step across type display, and at larger screen sizes into 3 columns.
+
+    *   A testimonials section that shows 3 testimonials from different clients.
+        As the screen width increases, these containers change from a column arragement to a left-right block type display.
+
+---
+### services.html
+
+1.  One Section with 6 containers.
+
+    *   IT Support Solutions
+    *   Cloud Services
+    *   Cyber Security
+    *   Telecoms & Mobile
+    *   Data Protection
+    *   Other Services
+
+    Thse have Font Awesome icons with their titles, and a block of text describing the importance of each service offered.
+
+    As the screen width increases, these containers change from a singel column to two columns and finally to three.
+
+
+### contactus.html
+
+1.  A header and a form.
+
+    The header blinks to the user showing the number to telephone, or offers the form.
+
+    The form takes values for the following - all fields are required.
+
+    *   First Name
+    *   Last Name
+    *   Business Email
+    *   Company name
+    *   Telephone / Mobile
+    *   Post Code
+    *   Number of computers
+    *   How can we help?
+     
+        This option has a textfield for the user to describe their issues.
+
+    *   How did you hear about us - 
+
+        This option gives a dropdown with the following options:
+        +   Internet search
+        +   Advertisement
+        +   Social media
+        +   Word of mouth
+        +   Business networking
+
+    As screen width increases the form increases width and font until 763px wide is reached, when it stays at a set width of 584px wide.
+
+
+---
+## Deployment
+
+The website has been deployed using Github pages.
+
+on Github, goto settings and then pages.
+deploy from branch, main and root.
+
+The site uses relative references, and so deployment in a local environment requires only a web server and a dedicated directory for the project
+
+
+Version Control
+The site was created using the Gitpod and pushed to github to the remote repository ‘Quicksilver-IT’.
+
+The following git commands were used throughout development to push code to the remote repo:
+
+git add <file> - This command was used to add the file(s) to the staging area before they are committed.
+
+git commit -m “commit message” - This command was used to commit changes to the local repository queue ready for the final step.
+
+git push - This command was used to push all committed code to the remote repository on github.
+
+Deployment to Github Pages
+The site was deployed to GitHub pages. The steps to deploy are as follows:
+In the GitHub repository, navigate to the Settings tab
+From the menu on left select 'Pages'
+From the source section drop-down menu, select the Branch: main
+Click 'Save'
+A live link will be displayed in a green banner when published successfully.
+The live link can be found here - https://mark279455.github.io/Quicksilver-IT/index.html
+
+Clone the Repository Code Locally
+Navigate to the GitHub Repository you want to clone to use locally:
+
+Click on the code drop down button
+Click on HTTPS
+Copy the repository link to the clipboard
+Open your IDE of choice (git must be installed for the next steps)
+Type git clone copied-git-url into the IDE terminal
+The project will now of been cloned on your local machine for use.
+
+---
+## Tests 
+
+Tests were done on all links on all pages - namely the navigation system.
+
+the Home, Services and Contact tabs in the header point to the index.html, services.html and contactus.html respectively.
+The Quicksilver IT logo in the top left of each page also redirects to the home page.
+
+All pages were tested to ensure responsiveness on screen sizes from 320px and upwards as defined in [WCAG 2.1 Reflow criteria for responsive design](https://www.w3.org/WAI/WCAG21/Understanding/reflow.html) Chrome, Edge, Firefox and Opera browsers.
+
+
+Validation
+The three html files were validated successfully by the W3C validator.
+
+* [Index Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/index.html)
+
+* [Services Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/services.html)
+
+* [Contact us Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/contactus.html)
+
+* [Styles.css](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/assets/css/styles.css)
+
+The site was verified by the W3.org CSS Validator page as well.
+
+![CSS VALIDATION](documentation/testing/w3.org-css-validator.jpg)
+
+
+## Lighthouse
+
+Lighthouse initially gave slower results than required. Images on the site were converted from .jpg to to .webp format, this successfully improved the loading times and raised the Lighthouse scores to be all over 90%.
+
+index.html
+![LIGHTHOUSE](documentation/testing/lighthouse-index.jpg)
+
+services.html
+![LIGHTHOUSE](documentation/testing/lighthouse-services.jpg)
+
+contactus.html
+![LIGHTHOUSE](documentation/testing/lighthouse-contactus.jpg)
+
+
+## Wave
+
+index.html
+
+![WAVE-INDEX](documentation/testing/wave-index.jpg)
+
+services.html
+
+![WAVE-SERVICES](documentation/testing/wave-services.jpg)
+
+contactus.html
+
+![WAVE-CONTACTUS](documentation/testing/wave-contactus.jpg)
+
+Wave produced a report showing 2 alerts on each page. This alert was in the header which is common to all pages.
+
+![WAVE-ALERT](documentation/testing/wave-redundant-in-header.jpg)
+
+![WAVE2](documentation/testing/wave2.jpg)
+
+These alerts related to a duplicated link in the header - which was a design choice.
+
+
+---
+## Bugs
+
+The form on the contactus page does not check that the input for number of computers is negative. For this to work, javascript would be required.
+
