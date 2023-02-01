@@ -2,13 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Merriweather+Sans:ital@1&display=swap');
 
 :root {
-  --white: #fffffff;
-  --purple: #8000ff;
-  --cyan: #00ffff;
-  --gray: #c0c0c0;
-  --pink: #ee31db;
-  --textcolor: #165b11;
-  --boardcolor-dark: #00ff37;
   --boardcolor-light: #ffffff;
   --boardcolor-wood: #966f33;
   --foreground: #0916cc;
@@ -35,12 +28,12 @@ header {
   font-family: 'Lato', sans-serif;
   color: var(--foreground);
   font-size: 1.5rem;
-  padding: 1rem;
+  padding: 0.25rem;
 }
 
 .info {
   font-size: 1.2rem;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 #gamediv {
@@ -58,7 +51,7 @@ header {
 }
 
 #setup {
-  padding: 1rem;
+  padding: 0.25rem;
   font-family: 'Lato', sans-serif;
   color: var(--foreground);
   font-size: 1.5rem;
@@ -71,7 +64,7 @@ button {
   margin-right: 1rem;
 }
 
-#setup-input{
+#setup-input {
   background-color: #ffffff;
   color: var(--foreground);
   font-size: larger;
@@ -95,15 +88,18 @@ img {
 
 #setup-input {
   width: 5rem;
+  background-color: var(--background);
 }
 
+#info3 {
+  font-weight: bold;
+}
+
+/* media query - chessboard max size is 600px - at viewport 640px + we anchor it to the left */
 @media screen and (min-width: 640px) {
 
   #gamediv {
     display: block;
     margin-left: 20px;
-    /* justify-content: start;
-    align-items: center; */
   }
-  
 }

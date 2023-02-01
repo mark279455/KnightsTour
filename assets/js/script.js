@@ -5,12 +5,12 @@ const maxBoardSize = 15;
 // max width of board - so that for a reasonable size screen the wold board is visible
 const maxWidth = 600;
 // level of debugging to console.log
-const globalDebugLevel = 0;
+const globalDebugLevel = 1;
+// regular expression to test for square id
+const validIdPattern = /\d+-\d+/;
 
 // chessboard Element
 let chessBoard = document.getElementById('chessboard');
-// moved used counter
-let movesUsed = 0;
 // current square that we are on
 let currentSquare;
 // array of possible moves for knight to move to
@@ -26,7 +26,7 @@ let imageSet = 3;
 // light squares on board
 let lightColor = "#f0f0f0";
 // dark squares on board
-let darkColor = "#7C7C7C";
+let darkColor = "#8FDBFF";
 // highlighted squares - shows where we can move to
 let hintColor = "#00ff00";
 // chessboard border colour
@@ -82,11 +82,12 @@ function createBoard() {
     // write instructions
     writeInstructions();
     // add eventlistener to the document
-    document.addEventListener("click", function allSquares(event) {
-        // filter events - if calling element's parent has an id AND
-        // either its our firt move OR
-        // its one of the possible moves for the chessSquare
-        if (event.target.parentElement.id && (movesUsed === 0 || possibleToMoveTo.includes(event.target.parentElement))) {
+    document.addEventListener("click", function (event) {
+        // filter events:
+        // if calling element's parent has an id AND its in possibleToMoveTo
+        // OR
+        // its our firt move AND its has a valid id
+        if ((event.target.parentElement.id && possibleToMoveTo.includes(event.target.parentElement)) || moveHistory.length === 0 && (isValidId(event.target.parentElement.id))) {
             debugMessage(1, "clicked " + event.target.parentElement.id);
             // push the calling element to our history
             moveHistory.push(document.getElementById(event.target.parentElement.id));
@@ -103,12 +104,22 @@ function createBoard() {
 function writeInstructions() {
     writeInfoSectionHeading("Instructions");
     document.getElementById("info1").textContent = 'Welcome to \"The Knight\'s Tour\". To play, you must move a chess Knight around the board, and land on every square without landing on the same square twice.'
-    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board below."
+    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board in the box above."
     document.getElementById("info3").textContent = "Click on any square to start."
 }
 
 /**
- * write heading of Instructions or Game Over Section (infosection)
+ * returns true if id is valid - format of (1 or 2 digits) + "-" + (1 or 2 digits)
+ * uses constant validIdPattern
+ * @param {*} id 
+ * @returns 
+ */
+function isValidId(id) {
+    return validIdPattern.test(id);
+}
+
+/**
+ * writes heading of Instructions or Game Over Section (infosection)
  * @param {*} heading 
  */
 function writeInfoSectionHeading(heading) {
@@ -155,13 +166,11 @@ function setCurrentPosition() {
     // currentSquare is last chessSquare added to history
     currentSquare = moveHistory[moveHistory.length - 1];
     debugMessage(3, "currentSquare = [" + currentSquare.id + "]");
-    // increment move count
-    movesUsed++;
     // add a blue knigh to currentSquare
     addKnightToSquare(currentSquare, "blue");
     // overwrite the hint colour from this square being in possibleToMoveTo[]
     setSquareColor(currentSquare);
-    debugMessage(3, "currentSquare move[" + movesUsed + "] = " + currentSquare.id);
+    debugMessage(3, "currentSquare move[" + moveHistory.length + "] = " + currentSquare.id);
     // add "knight" to currentSquare classList
     currentSquare.classList.add("knight");
     debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
@@ -309,22 +318,17 @@ function gameOver() {
     // replace trailing comma with full stop
     moves = moves.substring(0, moves.length - 1) + ".";
     // if moves used = boardSize squared - we hit every square - announce result to player in #info1
-    if (movesUsed == Math.pow(boardSize, 2)) {
+    if (moveHistory.length == Math.pow(boardSize, 2)) {
         document.getElementById("info1").textContent = "You completed a Knight's Tour of " + boardSize + " by " + boardSize + ".";
     } else {
-        // we didnt hit every square - invert all the red knights on the board
-        for (sq in moveHistory) {
-            addKnightToSquare(moveHistory[sq], "red", true);
-        }
         // we didnt hit every square - invert the last knight on the board - the blue one
         addKnightToSquare(currentSquare, "blue", true);
         // announce result to player in #info1
-        document.getElementById("info1").textContent = "There are no more moves available. You made " + movesUsed + " moves out of a possible " + (Math.pow(boardSize, 2)) + ".";
+        document.getElementById("info1").textContent = "There are no more moves available. You made " + moveHistory.length + " moves out of a possible " + (Math.pow(boardSize, 2)) + ".";
     }
-    // display historic moves to player in #info2
-    document.getElementById("info2").textContent = "Your moves were " + moves;
-    // clear #info3
-    document.getElementById("info3").textContent = "";
+    // display historic moves to player in #info2 and #info3
+    document.getElementById("info2").textContent = "Your moves were:";
+    document.getElementById("info3").textContent = moves;
 }
 
 /**
@@ -348,10 +352,10 @@ function debugMessage(debugLevel, message, newLine) {
     }
 }
 
-/**
- * read boardSize square and restart game
- */
 
+/**
+ * read setup-input element and restart game with new boardsize
+ */
 function getSizeAndGo() {
     // set the new boardSize to the value in "setup-input"
     let newBoardSize = parseInt(document.getElementById("setup-input").value);
@@ -375,11 +379,10 @@ function getSizeAndGo() {
         }
         // but boardsize into "setup-input" window
         document.getElementById("setup-input").value = boardSize;
-        // reset moveHistory, allSquares, movesUsed
+        // reset moveHistory, allSquares
         moveHistory = [];
         allSquares = {};
         possibleToMoveTo = [];
-        movesUsed = 0;
         // create new game
         createBoard();
     }

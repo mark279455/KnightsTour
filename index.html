@@ -5,8 +5,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Knights Tour game / puzzle">
+  <meta name="keywords" content="knights tour, game, puzzle">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel='shortcut icon' type='image/x-icon' href='chess-knight.png' />
+  <link rel='shortcut icon' type='image/x-icon' href='./assets/images/chess-knight.png' />
   <title>Knights Tour</title>
 </head>
 
@@ -17,17 +19,17 @@
   <div id="gamediv">
     <div id="chessboard"></div>
   </div>
+  <div id="setup">
+    <label for="">
+      <span><button id="setup-button" type="button" id="set">Restart:</button>
+        <input id="setup-input" type="text" name="size" id="size" value="8" /></span>
+    </label>
+  </div>
   <div id="infosection">
     <h2>Instructions</h2>
     <p id="info1" class="info"></p>
     <p id="info2" class="info"></p>
     <p id="info3" class="info"></p>
-  </div>
-  <div id="setup">
-    <label for="">
-      <span><button id="setup-button" type="button" id="set">Start:</button>
-        <input id="setup-input" type="text" name="size" id="size" value="8" /></span>
-    </label>
   </div>
   <script src="assets/js/script.js"></script>
 </body>
