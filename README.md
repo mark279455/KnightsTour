@@ -1,10 +1,10 @@
 # Quicksilver IT Site
 
-README.md file for my Code Institutute first project.
+README.md file for my Code Institutute second project.
 
 ![Techsini](documentation/testing/techsini.JPG)
 
-I decided to do a simple design for a company that I used to own.
+This is an old mathematics puzzle, in which you have to move a knight around partI decided to do a simple design for a company that I used to own.
 Quicksilver IT Ltd provided IT support for small businesses in Hertfordshire.
 
 The site is designed to show potential customers what services the company offers, and encourage them to contact the company.
