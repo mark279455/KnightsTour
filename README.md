@@ -8,7 +8,8 @@ This is an old mathematics puzzle, in which you have to move a knight around a c
 It is possible to do, but it will take you a few attempts.
 There are solutions you can find online if you look for them.
 
-The game is simple to play, and allows you tp play on square boards between 4 x 4 and up to 15 x 15.offers, and encourage them to contact the company.
+The game is simple to play, and allows you to play on square boards between 4 x 4 and up to 15 x 15.
+As a mathematics problem it has a long history [Wikipedia](https://en.wikipedia.org/wiki/Knight%27s_tour)
 
 It is hosted on Github here [The Knight's Tour](https://mark279455.github.io/KnightsTour/)
 
@@ -54,142 +55,41 @@ The creator is ot a fan of serif fonts.
 
 Wireframes were created using Balsamiq for the following screen widths:
 
-400 - 600 px wide
-700px = and wider
+320 - 600 px wide
+601 - 640 px wide
+641px = and wider
 
-### Index.html - less than 420px
+### Index.html - 320 to 600px wide
 
-![Home Page](documentation/wireframes/index-420.png)
-
-
-### Index.html - 421 to 672px
-
-![Home Page](documentation/wireframes/index-421-672.png)
+![Home Page](documentation/wireframes/320-600.png)
 
 
+### Index.html - 601 to 640px wide
 
-### Index.html - 673px and wider
-
-![Home Page](documentation/wireframes/index-673+.png)
+![Home Page](documentation/wireframes/600-640.png)
 
 
 
-### services.html - less than 420px
+### Index.html - 641px and wider
 
-
-![Home Page](documentation/wireframes/services-420.png)
-
-
-### services.html - 421 to 672px
-
-![Home Page](documentation/wireframes/services-421-672.png)
-
-
-
-### services.html - 673px and wider
-
-![Home Page](documentation/wireframes/services-673+.png)
-
-
-
-### contactus.html - less than 420px
-
-
-![Home Page](documentation/wireframes/contactus-420.png)
-
-
-### contactus.html - 421 to 672px
-
-![Home Page](documentation/wireframes/contactus-421-672.png)
-
-
-
-### contactus.html - 673px and wider
-
-![Home Page](documentation/wireframes/contactus-673+.png)
+![Home Page](documentation/wireframes/641-above.png)
 
 
 ---
 ## Features
 
-### Features on all pages
+### Resizing
 
-1.  Naviagion from the header to each page.
-    * Home
-    * Services
-    * Readme
+a.  The board will resize according to the dimensions of the display it is opened on.
+b.  The board will resize dynamically when a compute browser window is resized.
 
-    The header stays at the top of all displays all the time.
-    This changes from a horizontal list at less than 763px and a vertical list on the right over 762px.
-    These also highlight to show which page is currently loaded.
+### Highlighting
+a.  Possible moves are highligted, during play, and invalid moves cannot be made.
 
-2.  Social Media Icons in the footer that have tooltips to describe them on hover.
-    The footer stays at the bottom of all displays all the time.
-
-### Index.html
-
-1.  Three sections that attend to 3 subjects.
-
-    *   A sales section
-        This contains a list of problems that the user may have with their current IT Support Company.
-        It also has a blinking line telling the user that poor IT Support is costing money.
-
-        As the screen width increases, the font size increases.
-
-    *   A section that describes why Quicksilver IT is different.
-        This describes some details about who Quicksilver IT are and how they operate.
-
-        As the screen width increases, these containers change from a column arragement to a step across type display, and at larger screen sizes into 3 columns.
-
-    *   A testimonials section that shows 3 testimonials from different clients.
-        As the screen width increases, these containers change from a column arragement to a left-right block type display.
-
----
-### services.html
-
-1.  One Section with 6 containers.
-
-    *   IT Support Solutions
-    *   Cloud Services
-    *   Cyber Security
-    *   Telecoms & Mobile
-    *   Data Protection
-    *   Other Services
-
-    Thse have Font Awesome icons with their titles, and a block of text describing the importance of each service offered.
-
-    As the screen width increases, these containers change from a singel column to two columns and finally to three.
-
-
-### contactus.html
-
-1.  A header and a form.
-
-    The header blinks to the user showing the number to telephone, or offers the form.
-
-    The form takes values for the following - all fields are required.
-
-    *   First Name
-    *   Last Name
-    *   Business Email
-    *   Company name
-    *   Telephone / Mobile
-    *   Post Code
-    *   Number of computers
-    *   How can we help?
-     
-        This option has a textfield for the user to describe their issues.
-
-    *   How did you hear about us - 
-
-        This option gives a dropdown with the following options:
-        +   Internet search
-        +   Advertisement
-        +   Social media
-        +   Word of mouth
-        +   Business networking
-
-    As screen width increases the form increases width and font until 763px wide is reached, when it stays at a set width of 584px wide.
+### Instructions and Results
+a.  The Instructions and results are shown in the same space in order that when played on smaller 
+        displays the end of game results are visible.
+b.  Moves made during play are shown at the end of the game
 
 
 ---
@@ -204,7 +104,7 @@ The site uses relative references, and so deployment in a local environment requ
 
 
 Version Control
-The site was created using the Gitpod and pushed to github to the remote repository ‘Quicksilver-IT’.
+The site was created using the Gitpod and pushed to github to the remote repository ‘KnightsTour’.
 
 The following git commands were used throughout development to push code to the remote repo:
 
@@ -221,7 +121,7 @@ From the menu on left select 'Pages'
 From the source section drop-down menu, select the Branch: main
 Click 'Save'
 A live link will be displayed in a green banner when published successfully.
-The live link can be found here - https://mark279455.github.io/Quicksilver-IT/index.html
+The live link can be found here - https://mark279455.github.io/KnightsTour/
 
 Clone the Repository Code Locally
 Navigate to the GitHub Repository you want to clone to use locally:
@@ -236,24 +136,15 @@ The project will now of been cloned on your local machine for use.
 ---
 ## Tests 
 
-Tests were done on all links on all pages - namely the navigation system.
-
-the Home, Services and Contact tabs in the header point to the index.html, services.html and contactus.html respectively.
-The Quicksilver IT logo in the top left of each page also redirects to the home page.
-
-All pages were tested to ensure responsiveness on screen sizes from 320px and upwards as defined in [WCAG 2.1 Reflow criteria for responsive design](https://www.w3.org/WAI/WCAG21/Understanding/reflow.html) Chrome, Edge, Firefox and Opera browsers.
+Tests were done on the index page to ensure responsiveness on screen sizes from 320px and upwards as defined in [WCAG 2.1 Reflow criteria for responsive design](https://www.w3.org/WAI/WCAG21/Understanding/reflow.html) Chrome, Edge, Firefox and Opera browsers.
 
 
 Validation
 The three html files were validated successfully by the W3C validator.
 
-* [Index Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/index.html)
+* [Index Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/KnightsTour/index.html)
 
-* [Services Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/services.html)
-
-* [Contact us Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/contactus.html)
-
-* [Styles.css](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/Quicksilver-IT/assets/css/styles.css)
+* [Styles.css](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/KnightsTour/assets/css/styles.css)
 
 The site was verified by the W3.org CSS Validator page as well.
 
