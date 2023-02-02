@@ -4,56 +4,49 @@ README.md file for my Code Institutute second project.
 
 ![Techsini](documentation/testing/techsini.JPG)
 
-This is an old mathematics puzzle, in which you have to move a knight around partI decided to do a simple design for a company that I used to own.
-Quicksilver IT Ltd provided IT support for small businesses in Hertfordshire.
+This is an old mathematics puzzle, in which you have to move a knight around a chessboard without landing on the same square twice.
+It is possible to do, but it will take you a few attempts.
+There are solutions you can find online if you look for them.
 
-The site is designed to show potential customers what services the company offers, and encourage them to contact the company.
+The game is simple to play, and allows you tp play on square boards between 4 x 4 and up to 15 x 15.offers, and encourage them to contact the company.
 
-It is hosted on Github here [Quicksilver IT](https://mark279455.github.io/Quicksilver-IT/index.html)
+It is hosted on Github here [The Knight's Tour](https://mark279455.github.io/KnightsTour/)
 
-[Mark Cooper QuicksilverIT Github Repository](https://github.com/mark279455/Quicksilver-IT)
+[Mark Cooper Knights Tour Github Repository](https://github.com/mark279455/KnightsTour)
 
 ## Technology Used
 
 HTML
 CSS
+Javascript
 Google Fonts
-Font Awesome icons (these require javascript)
+
 
 ## Credits
 
 Cedits are due to...
 Gareth_mentor for his advice and recommendations.
-Daisy_mentor and Cheryl_Phillips_5P for their tips and help during the November Hackathon.
-ger_ci for help and advice with flexbox and grid.
+ger_ci for help and advice with javascript coding.
 
 ## Design
 
-The site consists of 3 responsive pages.
+The site consists of 1 responsive page.
 index.html
-service.html
-contactus.html
 
 ### Colours
 
-The Company's logo was a green Q - this is the text colour for the site.
-A complementary colour has been added with a keyboard as a background.
-These are:
-#165B11 as text colour.
-#a5f4dc as background
+The Colours used have been changed a few times during development.
+The decision ws made to change to a paler colour chessboard to contrast more with the red and blue of the knights.
+the brighter background was chosen to make the page brighter, and the blue text to contrast with that.
 
 ### Typography
 
 The fonts used are from Google Fonts.
 They are:
-Montserrat - sans-serif
-Ubuntu - sans-serif
+Lato - sans-serif
+Merriweather - sans-serif
 
 The creator is ot a fan of serif fonts.
-
-### Background Image
-
-the background image is one the creator took of his daughter's laptop.
 
 ---
 ## Wireframes
@@ -61,12 +54,10 @@ the background image is one the creator took of his daughter's laptop.
 
 Wireframes were created using Balsamiq for the following screen widths:
 
-320 - 420 px wide
-421 = 672 px wide
-672 and wider
+400 - 600 px wide
+700px = and wider
 
 ### Index.html - less than 420px
-
 
 ![Home Page](documentation/wireframes/index-420.png)
 

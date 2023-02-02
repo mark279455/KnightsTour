@@ -5,7 +5,7 @@ const maxBoardSize = 15;
 // max width of board - so that for a reasonable size screen the wold board is visible
 const maxWidth = 600;
 // level of debugging to console.log
-const globalDebugLevel = 1;
+const globalDebugLevel = 0;
 // regular expression to test for square id
 const validIdPattern = /\d+-\d+/;
 
@@ -29,8 +29,6 @@ let lightColor = "#f0f0f0";
 let darkColor = "#8FDBFF";
 // highlighted squares - shows where we can move to
 let hintColor = "#00ff00";
-// chessboard border colour
-let woodColor = "#966f33";
 
 // create a board when the page loads - wait for DOM to load first
 document.addEventListener("DOMContentLoaded", function () {
@@ -103,9 +101,9 @@ function createBoard() {
  */
 function writeInstructions() {
     writeInfoSectionHeading("Instructions");
-    document.getElementById("info1").textContent = 'Welcome to \"The Knight\'s Tour\". To play, you must move a chess Knight around the board, and land on every square without landing on the same square twice.'
-    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board in the box above."
-    document.getElementById("info3").textContent = "Click on any square to start."
+    document.getElementById("info1").textContent = 'Welcome to \"The Knight\'s Tour\". To play, you must move a chess Knight around the board, and land on every square without landing on the same square twice.';
+    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board in the box above.";
+    document.getElementById("info3").textContent = "Click on any square to start.";
 }
 
 /**
@@ -141,14 +139,14 @@ function setSquareColor(chessSquare) {
 
     // if col + row is even colour is dark
     if ((col + row) % 2 !== 0) {
-        debugMessage(3, "setting [" + chessSquare.id + "] to darkColor [" + darkColor + "]")
+        debugMessage(3, "setting [" + chessSquare.id + "] to darkColor [" + darkColor + "]");
         chessSquare.style.backgroundColor = darkColor;
     } else {
         // colour is light
-        debugMessage(3, "setting [" + chessSquare.id + "] to lightColor [" + lightColor + "]")
+        debugMessage(3, "setting [" + chessSquare.id + "] to lightColor [" + lightColor + "]");
         chessSquare.style.backgroundColor = lightColor;
     }
-    debugMessage(3, "color of [" + chessSquare.id + "] is [" + chessSquare.style.backgroundColor + "]")
+    debugMessage(3, "color of [" + chessSquare.id + "] is [" + chessSquare.style.backgroundColor + "]");
     debugMessage(2, "setSquareColor() end");
 }
 
@@ -313,7 +311,7 @@ function gameOver() {
     let moves = "";
     for (sq in moveHistory) {
         // append chessSquare id from histor to string
-        moves += moveHistory[sq].id + ","
+        moves += moveHistory[sq].id + ",";
     }
     // replace trailing comma with full stop
     moves = moves.substring(0, moves.length - 1) + ".";
@@ -388,10 +386,11 @@ function getSizeAndGo() {
     }
 }
 
-
+// add eventlistener "click" to setup-button to act on it being clicked
 document.getElementById("setup-button").addEventListener("click", function (event) {
     getSizeAndGo();
 });
+// add eventlistener "keydown" to setup-input filed to act on it being changed
 document.getElementById("setup-input").addEventListener("keydown", function (event) {
     if (event.key === "Enter")
         getSizeAndGo();
