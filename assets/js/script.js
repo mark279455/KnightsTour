@@ -4,8 +4,6 @@ const minBoardSize = 4;
 const maxBoardSize = 15;
 // max width of board - so that for a reasonable size screen the wold board is visible
 const maxWidth = 600;
-// level of debugging to console.log
-const globalDebugLevel = 0;
 // regular expression to test for square id
 const validIdPattern = /\d+-\d+/;
 
@@ -39,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
  * create the chessboard with the size of boardSize
  */
 function createBoard() {
-    debugMessage(1, "\tcreateBoard() start", true);
     let screenWidth = window.innerWidth;
     // randomise which knight images to use
     imageSet = Math.floor((Math.random() * 3) + 1);
@@ -69,9 +66,6 @@ function createBoard() {
             allSquares[chessSquare.id] = chessSquare;
         }
     }
-    debugMessage(1, "screen width = " + window.innerWidth);
-    debugMessage(1, "screen height = " + window.innerHeight);
-    debugMessage(1, "boardsize = " + boardSize);
     // set board dimensions to max or min from constants
     if (screenWidth > maxWidth) {
         chessBoard.style.width = maxWidth + "px";
@@ -86,14 +80,12 @@ function createBoard() {
         // OR
         // its our firt move AND its has a valid id
         if ((event.target.parentElement.id && possibleToMoveTo.includes(event.target.parentElement)) || moveHistory.length === 0 && (isValidId(event.target.parentElement.id))) {
-            debugMessage(1, "clicked " + event.target.parentElement.id);
             // push the calling element to our history
             moveHistory.push(document.getElementById(event.target.parentElement.id));
             // set currentSquare to the calling element
             setCurrentPosition();
         }
     });
-    debugMessage(1, "\tcreateBoard() end");
 }
 
 /**
@@ -132,49 +124,38 @@ function writeInfoSectionHeading(heading) {
  * @param {*} chessSquare 
  */
 function setSquareColor(chessSquare) {
-    debugMessage(2, "setSquareColor() start");
     // get the numbers from the element's id
     let col = parseInt(chessSquare.id.split("-")[0]);
     let row = parseInt(chessSquare.id.split("-")[1]);
 
     // if col + row is even colour is dark
     if ((col + row) % 2 !== 0) {
-        debugMessage(3, "setting [" + chessSquare.id + "] to darkColor [" + darkColor + "]");
         chessSquare.style.backgroundColor = darkColor;
     } else {
         // colour is light
-        debugMessage(3, "setting [" + chessSquare.id + "] to lightColor [" + lightColor + "]");
         chessSquare.style.backgroundColor = lightColor;
     }
-    debugMessage(3, "color of [" + chessSquare.id + "] is [" + chessSquare.style.backgroundColor + "]");
-    debugMessage(2, "setSquareColor() end");
 }
 
 /**
  * deals with the currentSquare that we are on
  */
 function setCurrentPosition() {
-    debugMessage(1, "\n\tsetCurrentPosition start");
     // if we have historical moves - i.e. not first move
     if (moveHistory.length > 1) {
         // set historical knigh to red
         addKnightToSquare(getLastMove(), "red");
-        debugMessage(3, "removing square ref [" + getLastMove().id + "] from moveHistory");
     }
     // currentSquare is last chessSquare added to history
     currentSquare = moveHistory[moveHistory.length - 1];
-    debugMessage(3, "currentSquare = [" + currentSquare.id + "]");
     // add a blue knigh to currentSquare
     addKnightToSquare(currentSquare, "blue");
     // overwrite the hint colour from this square being in possibleToMoveTo[]
     setSquareColor(currentSquare);
-    debugMessage(3, "currentSquare move[" + moveHistory.length + "] = " + currentSquare.id);
     // add "knight" to currentSquare classList
     currentSquare.classList.add("knight");
-    debugMessage(3, "possibleToMoveTo = [" + possibleToMoveTo.length + "] " + possibleToMoveTo);
     // generate possibleToMoveTo[] for currentSquare
     getPossibleToMoveTo();
-    debugMessage(1, "\tsetCurrentPosition end");
 }
 
 /**
@@ -194,7 +175,6 @@ function getLastMove() {
  * @param {*} invert 
  */
 function addKnightToSquare(chessSquare, color, invert) {
-    debugMessage(2, "addKnightToSquare(" + chessSquare.id + ", " + color + ", " + invert + ")");
     switch (color) {
         case "red":
             if (invert) {
@@ -216,14 +196,12 @@ function addKnightToSquare(chessSquare, color, invert) {
             }
             break;
     }
-    debugMessage(2, "addKnightToSquare(" + chessSquare.id + ", " + color + ") done");
 }
 
 /**
  * calculates possible squares we can move to from currentSquare
  */
 function getPossibleToMoveTo() {
-    debugMessage(1, "\tgetPossibleToMoveTo start " + currentSquare.id);
     // clear everything from last move
     clearOldPossibleMoves();
     // get col and row from currentSquare.id
@@ -257,7 +235,6 @@ function getPossibleToMoveTo() {
     }
     // we have our possible moves - set them to the hint colour
     for (sq in possibleToMoveTo) {
-        debugMessage(2, "possible squares = " + possibleToMoveTo[sq].id);
         possibleToMoveTo[sq].style.backgroundColor = hintColor;
     }
 
@@ -265,7 +242,6 @@ function getPossibleToMoveTo() {
     if (possibleToMoveTo.length === 0) {
         gameOver();
     }
-    debugMessage(1, "\tgetPossibleToMoveTo end");
 }
 
 /**
@@ -285,10 +261,7 @@ function isVisited(chessSquare) {
  * clear possibleToMoveTo[] and reset square colours from hint
  */
 function clearOldPossibleMoves() {
-    debugMessage(1, "\tclearOldPossibleMoves start");
-    debugMessage(3, "clearing " + possibleToMoveTo);
     for (sq in possibleToMoveTo) {
-        debugMessage(3, "square: " + possibleToMoveTo[sq]);
         // if its not been visited
         if (!isVisited(possibleToMoveTo[sq])) {
             // set it back to dark or light colour
@@ -297,14 +270,12 @@ function clearOldPossibleMoves() {
     }
     // empty array for next move
     possibleToMoveTo = [];
-    debugMessage(1, "\tclearOldPossibleMoves end");
 }
 
 /**
  * game is over - there are no more possible moves
  */
 function gameOver() {
-    debugMessage(1, "gameOver() start");
     // write heading for Game over section (#infosection)
     writeInfoSectionHeading("Game Over");
     // create string to display moves
@@ -328,28 +299,6 @@ function gameOver() {
     document.getElementById("info2").textContent = "Your moves were:";
     document.getElementById("info3").textContent = moves;
 }
-
-/**
- * very basic logging filter - allows console.log to be very verbose or quiet
- * @param {*} debugLevel 
- * if debugLevel > globalDebugLevel - we will log
- * @param {*} message 
- * message to display
- * @param {*} newLine
- * add message on new line if required 
- */
-function debugMessage(debugLevel, message, newLine) {
-    if (debugLevel > 0) {
-        if (debugLevel <= globalDebugLevel) {
-            if (newLine) {
-                console.log("\n" + message);
-            } else {
-                console.log(message);
-            }
-        }
-    }
-}
-
 
 /**
  * read setup-input element and restart game with new boardsize
