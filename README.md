@@ -147,7 +147,7 @@ The three html files were validated successfully by the W3C validator.
 
 * [Index Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/KnightsTour/index.html)
 
-* [Styles.css](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/KnightsTour/assets/css/styles.css)
+* [Styles.css](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/KnightsTour/assets/css/style.css)
 
 The site was verified by the W3.org CSS Validator page as well.
 
