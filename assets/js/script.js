@@ -2,7 +2,7 @@
 const minBoardSize = 4;
 // maximum size of board - kind of meaningless when less than 4
 const maxBoardSize = 15;
-// max width of board - so that for a reasonable size screen the wold board is visible
+// max width of board - so that for bigger displays it doesnt get bigger and bigger
 const maxWidth = 600;
 // regular expression to test for square id
 const validIdPattern = /\d+-\d+/;
