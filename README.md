@@ -11,6 +11,9 @@ There are solutions you can find online if you look for them.
 The game is simple to play, and allows you to play on square boards between 4 x 4 and up to 15 x 15.
 As a mathematics problem it has a long history [Wikipedia](https://en.wikipedia.org/wiki/Knight%27s_tour)
 
+It is not easy to complete, but there are literally trillions of solutions. 
+    THIS PAGE WILL SHOW YOU SOLUTIONS [Youtube Numberphile](https://www.youtube.com/watch?v=ab_dY3dZFHM)
+
 It is hosted on Github here [The Knight's Tour](https://mark279455.github.io/KnightsTour/)
 
 [Mark Cooper Knights Tour Github Repository](https://github.com/mark279455/KnightsTour)
