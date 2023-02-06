@@ -4,6 +4,28 @@ README.md file for my Code Institutute second project.
 
 ![Techsini](documentation/testing/techsini.JPG)
 
+
+# QUESTIONS:
+##  Cumulative Layout Shift - lighthouse
+##  Form stuff in Wave
+##  Why is lighthouse slow  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is an old mathematics puzzle, in which you have to move a knight around a chessboard without landing on the same square twice.
 It is possible to do, but it will take you a few attempts.
 There are solutions you can find online if you look for them.
