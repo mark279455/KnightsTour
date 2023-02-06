@@ -61,7 +61,7 @@ function createBoard() {
             // append chessSquare to the row
             row.appendChild(chessSquare);
             // set an transparent image to the chessSquare
-            chessSquare.innerHTML = '<img src="./assets/images/knights-set' + imageSet + '/blank.webp" alt="empty square">';
+            chessSquare.innerHTML = '<img src="./assets/images/knights-set' + imageSet + '/blank.webp" alt="empty square ' + chessSquare.id + '">';
             // add the chessSquare to allSquares with its id
             allSquares[chessSquare.id] = chessSquare;
         }
@@ -71,14 +71,14 @@ function createBoard() {
         chessBoard.style.width = maxWidth + "px";
         chessBoard.style.maxWidth = maxWidth + "px";
     }
-    // write instructions
+    // write instructions to info section
     writeInstructions();
     // add eventlistener to the document
-    document.addEventListener("click", function (event) {
+    chessBoard.addEventListener("click", function (event) {
         // filter events:
         // if calling element's parent has an id AND its in possibleToMoveTo
         // OR
-        // its our firt move AND its has a valid id
+        // its our firt move AND it has a valid id
         if ((event.target.parentElement.id && possibleToMoveTo.includes(event.target.parentElement)) || moveHistory.length === 0 && (isValidId(event.target.parentElement.id))) {
             // push the calling element to our history
             moveHistory.push(document.getElementById(event.target.parentElement.id));
@@ -344,3 +344,35 @@ document.getElementById("setup-input").addEventListener("keydown", function (eve
     if (event.key === "Enter")
         getSizeAndGo();
 });
+
+    // create setup-button and setup-input elements
+    // createSetupElements();
+/** create button and input for game restart and resize
+ * 
+ */
+// function createSetupElements() {
+//     let setupElement = document.getElementById("setup");
+//     // delete contents
+//     setupElement.innerHTML = "";
+
+//     // create button and set params
+//     let btn = document.createElement("button");
+//     btn.addEventListener("click", function (event) {
+//         getSizeAndGo();
+//     });
+//     btn.classList.add("setup");
+//     btn.id = "setup-button";
+//     btn.textContent = "Restart:";
+
+//     // create input and set params
+//     let input = document.createElement("input");
+//     input.addEventListener("keydown", function (event) {
+//         if (event.key === "Enter")
+//             getSizeAndGo();
+//     });
+//     input.classList.add("setup");
+//     input.id = "setup-input";
+//     input.value = boardSize + "";
+//     setupElement.append(btn);
+//     setupElement.append(input);
+// }

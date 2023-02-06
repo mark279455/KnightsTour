@@ -83,16 +83,20 @@ Wireframes were created using Balsamiq for the following screen widths:
 
 ### Resizing
 
-a.  The board will resize according to the dimensions of the display it is opened on.
-b.  The board will resize dynamically when a compute browser window is resized.
+    The board will resize according to the dimensions of the display it is opened on.
+    
+    The board will resize dynamically when a compute browser window is resized.
 
 ### Highlighting
-a.  Possible moves are highligted, during play, and invalid moves cannot be made.
+
+    Possible moves are highligted, during play, and invalid moves cannot be made.
 
 ### Instructions and Results
-a.  The Instructions and results are shown in the same space in order that when played on smaller 
+    
+    The Instructions and results are shown in the same space in order that when played on smaller 
         displays the end of game results are visible.
-b.  Moves made during play are shown at the end of the game
+    
+    Moves made during play are shown at the end of the game
 
 
 ---
@@ -143,7 +147,7 @@ Tests were done on the index page to ensure responsiveness on screen sizes from 
 
 
 Validation
-The three html files were validated successfully by the W3C validator.
+The index.html file was validated successfully by the W3C validator.
 
 * [Index Page](https://validator.w3.org/nu/?showsource=yes&doc=https://mark279455.github.io/KnightsTour/index.html)
 
@@ -151,7 +155,7 @@ The three html files were validated successfully by the W3C validator.
 
 The site was verified by the W3.org CSS Validator page as well.
 
-![CSS VALIDATION](documentation/testing/w3.org-css-validator.jpg)
+![CSS VALIDATION](documentation/testing/w3.org-css-validator.png)
 
 
 ## Lighthouse
@@ -159,40 +163,41 @@ The site was verified by the W3.org CSS Validator page as well.
 Lighthouse initially gave slower results than required. Images on the site were converted from .jpg to to .webp format, this successfully improved the loading times and raised the Lighthouse scores to be all over 90%.
 
 index.html
-![LIGHTHOUSE](documentation/testing/lighthouse-index.jpg)
 
-services.html
-![LIGHTHOUSE](documentation/testing/lighthouse-services.jpg)
-
-contactus.html
-![LIGHTHOUSE](documentation/testing/lighthouse-contactus.jpg)
+![LIGHTHOUSE](documentation/testing/lighthouse.png)
 
 
 ## Wave
 
 index.html
 
-![WAVE-INDEX](documentation/testing/wave-index.jpg)
+![WAVE-INDEX](documentation/testing/wave.png)
 
-services.html
+### Errors
+    Wave showed one error - saying that there was a missing form label on the setup-input field.
+    It was a design choice to not submit a form here, and so no form is present.
 
-![WAVE-SERVICES](documentation/testing/wave-services.jpg)
-
-contactus.html
-
-![WAVE-CONTACTUS](documentation/testing/wave-contactus.jpg)
-
-Wave produced a report showing 2 alerts on each page. This alert was in the header which is common to all pages.
-
-![WAVE-ALERT](documentation/testing/wave-redundant-in-header.jpg)
-
-![WAVE2](documentation/testing/wave2.jpg)
-
-These alerts related to a duplicated link in the header - which was a design choice.
+### Alerts
+    Wave shows one alert - saying that the info3 field was a possible heading.
+    It is not a heading.
 
 
 ---
 ## Bugs
 
-The form on the contactus page does not check that the input for number of computers is negative. For this to work, javascript would be required.
+I am not aware of any bugs in the code.
+
+## Future Development
+
+It would be nice to write some functionality where you could backup your moves, and go back to the last square that you moved to and then continue.
+
+
+## User Story
+
+As a user on this game/puzzle, I would like following:
+
+    The ability to see my next possible move(s).
+    I would like to see my previous moves on completion or failure of the puzzle.
+
+
 
