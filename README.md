@@ -5,7 +5,7 @@ README.md file for my Code Institutute second project.
 
 It is hosted on Github here:  
 [The Knight's Tour](https://mark279455.github.io/KnightsTour/)  
-The GitHub repository:
+The GitHub repository:  
 [Mark Cooper Knights Tour Github Repository](https://github.com/mark279455/KnightsTour)
 
 ![Techsini](documentation/testing/techsini.JPG)
