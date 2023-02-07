@@ -4,41 +4,47 @@ README.md file for my Code Institutute second project.
 
 ![Techsini](documentation/testing/techsini.JPG)
 
+The Knights Tour is an old mathematics puzzle, in which you have to move a knight around a chessboard without landing on the same square twice.
 
-# QUESTIONS:
-##  Cumulative Layout Shift - lighthouse
-##  Form stuff in Wave
-##  Why is lighthouse slow  
+As a mathematics problem it has a long history [Wikipedia](https://en.wikipedia.org/wiki/Knight%27s_tour)
 
+It is possible to do, but it will take you a few attempts, there are lierally trillions of solutions.
+There are also different classifications of solutions.
 
+## Closed Tour
+    This is where your from your last move you can go back to the place you started from.
 
+## Open Tour
+    This is where your starting point, and last move are not related. - if thats the right word
 
+## Magic Squares
+    Drop a 1 on your first square, a 2 on the second, and continue to the end.
+    Mathematical magic squares are where all the columns and rows and diagonals and quarters add up to the same number.
 
-
-
-
-
-
-
-
-
-
-
-
-
-This is an old mathematics puzzle, in which you have to move a knight around a chessboard without landing on the same square twice.
-It is possible to do, but it will take you a few attempts.
 There are solutions you can find online if you look for them.
 
-The game is simple to play, and allows you to play on square boards between 4 x 4 and up to 15 x 15.
-As a mathematics problem it has a long history [Wikipedia](https://en.wikipedia.org/wiki/Knight%27s_tour)
+This version of the game is simple to play, and allows you to play on square boards between 4 x 4 and up to 15 x 15.
 
 It is not easy to complete, but there are literally trillions of solutions. 
     THIS PAGE WILL SHOW YOU SOLUTIONS [Youtube Numberphile](https://www.youtube.com/watch?v=ab_dY3dZFHM)
+- - - 
+
+# CONTENTS
+
+* [User Experience](#User-Experience)
+  * [Initial Thoughts](#Initial-Thoughts)
+  * [User Stories](#User-Stories)
+
+
+- - - 
+
 
 It is hosted on Github here [The Knight's Tour](https://mark279455.github.io/KnightsTour/)
 
 [Mark Cooper Knights Tour Github Repository](https://github.com/mark279455/KnightsTour)
+
+
+
 
 ## Technology Used
 
@@ -193,11 +199,7 @@ index.html
 
 index.html
 
-![WAVE-INDEX](documentation/testing/wave.png)
-
-### Errors
-    Wave showed one error - saying that there was a missing form label on the setup-input field.
-    It was a design choice to not submit a form here, and so no form is present.
+![WAVE-INDEX](documentation/testing/wave_empty_board.png)
 
 ### Alerts
     Wave shows one alert - saying that the info3 field was a possible heading.
@@ -214,12 +216,13 @@ I am not aware of any bugs in the code.
 It would be nice to write some functionality where you could backup your moves, and go back to the last square that you moved to and then continue.
 
 
-## User Story
+## User Experience
 
+### Initial Thoughts
+
+### User Stories
 As a user on this game/puzzle, I would like following:
 
     The ability to see my next possible move(s).
     I would like to see my previous moves on completion or failure of the puzzle.
-
-
 
