@@ -25,13 +25,14 @@ There are also different classifications of solutions.
 
 ## Magic Square
     Drop a 1 on your first square, a 2 on the second, and continue to the end.
-    Mathematical magic squares are where all the columns and rows and diagonals and quarters add up to the same number.
+    Mathematical magic squares are where all the columns and rows and diagonals
+    and quarters add up to the same number.
 
 There are solutions you can find online if you look for them.
 
 This version of the game is simple to play, and allows you to play on square boards between 4 x 4 and up to 15 x 15.
 
-It is not easy to complete, but there are literally trillions of solutions. 
+It is not easy to complete, but there are literally trillions of solutions.  
     THIS PAGE WILL SHOW YOU SOLUTIONS [Youtube Numberphile](https://www.youtube.com/watch?v=ab_dY3dZFHM)
 
 
@@ -206,7 +207,8 @@ The following git commands were used throughout development to push code to the 
     *   From the source section drop-down menu, select the Branch: main
     *   Click 'Save'
     *   A live link will be displayed in a green banner when published successfully.
-            The live link can be found here - https://mark279455.github.io/KnightsTour/
+            The live link can be found here -   
+            [The Knight's Tour](https://mark279455.github.io/KnightsTour/)
 
 ### Clone the Repository Code Locally
 Navigate to the GitHub Repository you want to clone to use locally:
@@ -268,7 +270,7 @@ Everything works as designed, and the author is unaware of any bugs that exist.
 ## Credits
 
 Cedits are due to...
-Gareth_mentor for his advice and recommendations.
-ger_ci for help and advice with javascript coding.
+    *   Gareth_mentor for his advice and recommendations.
+    *   ger_ci for help and advice with javascript coding.
 
 ---
