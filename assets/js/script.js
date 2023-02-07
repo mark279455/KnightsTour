@@ -258,7 +258,7 @@ function isVisited(chessSquare) {
 }
 
 /**
- * clear possibleToMoveTo[] and reset square colours from hint
+ * clear possibleToMoveTo[] and reset square colours from hint colour
  */
 function clearOldPossibleMoves() {
     for (sq in possibleToMoveTo) {
@@ -344,35 +344,3 @@ document.getElementById("setup-input").addEventListener("keydown", function (eve
     if (event.key === "Enter")
         getSizeAndGo();
 });
-
-    // create setup-button and setup-input elements
-    // createSetupElements();
-/** create button and input for game restart and resize
- * 
- */
-// function createSetupElements() {
-//     let setupElement = document.getElementById("setup");
-//     // delete contents
-//     setupElement.innerHTML = "";
-
-//     // create button and set params
-//     let btn = document.createElement("button");
-//     btn.addEventListener("click", function (event) {
-//         getSizeAndGo();
-//     });
-//     btn.classList.add("setup");
-//     btn.id = "setup-button";
-//     btn.textContent = "Restart:";
-
-//     // create input and set params
-//     let input = document.createElement("input");
-//     input.addEventListener("keydown", function (event) {
-//         if (event.key === "Enter")
-//             getSizeAndGo();
-//     });
-//     input.classList.add("setup");
-//     input.id = "setup-input";
-//     input.value = boardSize + "";
-//     setupElement.append(btn);
-//     setupElement.append(input);
-// }
