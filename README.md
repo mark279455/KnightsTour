@@ -174,7 +174,6 @@ Wave Accessibility tool was used throughout development and for final testing of
 
 Testing was focused to ensure the following criteria were met
 
-All forms have associated labels or aria-labels so that this is read out on a screen reader to users who tab to form inputs
 Color contrasts meet a minimum ratio as specified in WCAG 2.1 Contrast Guidelines
 Heading levels are not missed or skipped to ensure the importance of content is relayed correctly to the end user
 All content is contained within landmarks to ensure ease of use for assistive technology, allowing the user to navigate by page regions
@@ -183,7 +182,9 @@ HTML page lang attribute has been set
 Aria properties have been implemented correctly
 WCAG 2.1 Coding best practices being followed
 Manual tests were also performed to ensure the website was accessible as possible and some accessibility issues were identified.
+
 ---
+
 
 ## Technology Used
 
@@ -347,8 +348,17 @@ Everything works as designed, and the author is unaware of any bugs that exist.
 
 ## Credits
 
-Cedits are due to...
+Credits are due to...
+
     *   Gareth_mentor for his advice and recommendations.
+
     *   ger_ci for help and advice with javascript coding.
+
+    *   Stackoverflow  
+        https://stackoverflow.com/questions/3416454/how-to-make-an-empty-div-take-space
+        https://stackoverflow.com/questions/4171286/how-to-make-a-div-with-no-content-have-a-width
+
+    *	YouTube
+    	https://www.youtube.com/watch?v=u9HJDC3I_Qg
 
 ---
