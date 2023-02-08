@@ -115,8 +115,8 @@ function isValidId(id) {
 function writeInfoSectionHeading(heading) {
     let infoSection = document.getElementById("infosection");
     let h2Elements = infoSection.querySelectorAll("h2");
-    for (h2 in h2Elements)
-        h2Elements[h2].textContent = heading;
+    for (var i = 0; i < h2Elements.length; i++)
+        h2Elements[i].textContent = heading;
 }
 
 /**
@@ -234,9 +234,8 @@ function getPossibleToMoveTo() {
         }
     }
     // we have our possible moves - set them to the hint colour
-    for (sq in possibleToMoveTo) {
-        possibleToMoveTo[sq].style.backgroundColor = hintColor;
-    }
+    for (var i = 0; i < possibleToMoveTo.length; i++)
+        possibleToMoveTo[i].style.backgroundColor = hintColor;
 
     // if we have no possible moves the game is over
     if (possibleToMoveTo.length === 0) {
@@ -261,11 +260,11 @@ function isVisited(chessSquare) {
  * clear possibleToMoveTo[] and reset square colours from hint colour
  */
 function clearOldPossibleMoves() {
-    for (sq in possibleToMoveTo) {
+    for (var i = 0; i < possibleToMoveTo.length; i++) {
         // if its not been visited
-        if (!isVisited(possibleToMoveTo[sq])) {
+        if (!isVisited(possibleToMoveTo[i])) {
             // set it back to dark or light colour
-            setSquareColor(possibleToMoveTo[sq]);
+            setSquareColor(possibleToMoveTo[i]);
         }
     }
     // empty array for next move
@@ -280,9 +279,9 @@ function gameOver() {
     writeInfoSectionHeading("Game Over");
     // create string to display moves
     let moves = "";
-    for (sq in moveHistory) {
+    for (var i = 0; i < moveHistory.length; i++) {
         // append chessSquare id from histor to string
-        moves += moveHistory[sq].id + ",";
+        moves += moveHistory[i].id + ",";
     }
     // replace trailing comma with full stop
     moves = moves.substring(0, moves.length - 1) + ".";

@@ -59,6 +59,7 @@ It is not easy to complete, but there are literally trillions of solutions.
 
 * [Test](#Tests)
   * [W3C Validator](#W3C-Validator)
+  * [JSHint](#JSHint)
   * [Lighthouse](#Lighthouse)
     * [Index.html](#Index.html)
   * [Wave](#wave)
@@ -139,16 +140,27 @@ Wireframes were created using Balsamiq for the following screen widths:
     The board will resize according to the dimensions of the display it is opened on.  
     The board will resize dynamically when a compute browser window is resized.
 
+    Wide screen (754) showing the max board size of 600px, and its anchoring to the left by 20px
+![Wide](documentation/testing/board_754wide.png)
+
+    Narrower screen (424) showing the same board resized to fill the viewport.
+![Narrow](documentation/testing/board_424wide.png)
+
 ### Highlighting
 
     Possible moves are highligted, during play, and invalid moves cannot be made.
 
+![Hints](documentation/testing/possible_moves.png)
+
 ### Instructions and Results
     
-    The Instructions and results are shown in the same space in order that when played on smaller 
-        displays the end of game results are visible.
-    
+    The Instructions and results are shown in the same space in order that when played on smaller displays the end of game results are visible.
+
+![Instructions](documentation/testing/instructions.png)
+
     Moves made during play are shown at the end of the game
+
+![Results](documentation/testing/results.png)
 
 ### Future Development
 
@@ -157,12 +169,20 @@ An option to play a "Magic Square" game, where instead of leaving a knight on yo
 
 ---
 ## Accessibility
-The site uses the following aids to accessibility.
 
-    *   Semantic HTML.
-    *   "alt" tags on images.
-    *   Sufficient colour contrasts.
+Wave Accessibility tool was used throughout development and for final testing of the deployed website to check for any aid accessibility testing.
 
+Testing was focused to ensure the following criteria were met
+
+All forms have associated labels or aria-labels so that this is read out on a screen reader to users who tab to form inputs
+Color contrasts meet a minimum ratio as specified in WCAG 2.1 Contrast Guidelines
+Heading levels are not missed or skipped to ensure the importance of content is relayed correctly to the end user
+All content is contained within landmarks to ensure ease of use for assistive technology, allowing the user to navigate by page regions
+All not textual content had alternative text or titles so descriptions are read out to screen readers
+HTML page lang attribute has been set
+Aria properties have been implemented correctly
+WCAG 2.1 Coding best practices being followed
+Manual tests were also performed to ensure the website was accessible as possible and some accessibility issues were identified.
 ---
 
 ## Technology Used
@@ -238,10 +258,16 @@ The style.css file was verified by the W3.org CSS Validator page.
 
 ![CSS VALIDATION](documentation/testing/w3.org-css-validator.png)
 
+## JSHint
+
+script.js was tested with the [JSHint code analysis tool](https://jshint.com/), and no errors were reported.
+
+![JSHINT](documentation/testing/jshint.png)
+
 
 ## Lighthouse
 
-Lighthouse initially gave slower results than required. Images on the site were converted from .jpg to to .webp format, this successfully improved the loading times and raised the Lighthouse scores to be all over 90%.
+Lighthouse initially gave slower results than required. Images on the site were converted from .jpg to to .webp format, this successfully improved the loading times and raised the Lighthouse scores to be 90% or over.
 
 ### index.html
 
@@ -252,13 +278,65 @@ Lighthouse initially gave slower results than required. Images on the site were 
 
 index.html
 
+Wave gave an error concerning an input field that was missing a form label. 
+
+![WAVE-ERROR](documentation/testing/waveerror.png)
+
+This was overcome by adding an aria label.
+
 ![WAVE-INDEX](documentation/testing/wave_empty_board.png)
 
 ### Alerts
     Wave shows one alert - saying that the info3 field was a possible heading.
     It is not a heading.
 
-### [Manual Testing](#Manual-Testing)
+### Manual Testing
+
+    A testing procedure was implemented to test functionality of the puzzle.
+
+    1.  Setting the option to change board size works
+
+        Maximum size
+![Maximum size](documentation/testing/startempty_max.png)
+
+        Minimum size
+![Minimum size](documentation/testing/startempty_min.png)
+    
+        Intermediate size
+![Intermediate size](documentation/testing/startempty_5by5.png)
+    
+        Default size
+![Default size](documentation/testing/startempty_8by8.png)
+    
+
+    2.  Hint moves displayed correctly   
+        Testing for hint moves to be correct, and also that squares previously visited are not "hinted".
+
+        In the board centre
+![In the board centre](documentation/testing/hintmoves_center.png)
+
+        At the board edge.
+![In the board centre](documentation/testing/hintmoves_edge.png)
+
+        At not the first move.
+![In the board centre](documentation/testing/hintmoves_notfirstmove.png)
+
+    3.  The completed and incomplete games produced the correct display, both in effects  and the results displayed
+
+        Completed puzzle.
+![complete](documentation/testing/completed.png)
+
+        Incomplete puzzle.
+![incomplete](documentation/testing/incomplete.png)
+
+    4.  The input taken for board size was valid.
+
+        Invalid input.
+![input error](documentation/testing/input_error.png)
+
+
+    5.  During the game, the only inputs available to the user are the hint squares and the restart button (and input field). It was tested that evrything else was inactive or non-responsive.
+
     The implmentation has been tested extensively using Chrome, Edge, Firefox and Opera browsers.
 
 ### Bugs
