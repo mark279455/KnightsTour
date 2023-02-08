@@ -351,14 +351,11 @@ Everything works as designed, and the author is unaware of any bugs that exist.
 Credits are due to...
 
     *   Gareth_mentor for his advice and recommendations.
-
     *   ger_ci for help and advice with javascript coding.
-
     *   Stackoverflow  
         https://stackoverflow.com/questions/3416454/how-to-make-an-empty-div-take-space
         https://stackoverflow.com/questions/4171286/how-to-make-a-div-with-no-content-have-a-width
-
-    *	YouTube
+    *   YouTube
     	https://www.youtube.com/watch?v=u9HJDC3I_Qg
 
 ---
