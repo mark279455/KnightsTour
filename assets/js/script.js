@@ -94,7 +94,7 @@ function createBoard() {
 function writeInstructions() {
     writeInfoSectionHeading("Instructions");
     document.getElementById("info1").textContent = 'Welcome to \"The Knight\'s Tour\". To play, you must move a chess Knight around the board, and land on every square without landing on the same square twice.';
-    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board in the box above.";
+    document.getElementById("info2").textContent = "The game will show you your available moves, and you can change the size of the board in the box above. The board can be from 4 x 4 to 15 x 15.";
     document.getElementById("info3").textContent = "Click on any square to start.";
 }
 
