@@ -152,6 +152,13 @@ Wireframes were created using Balsamiq for the following screen widths:
 
 ![Hints](documentation/testing/possible_moves.png)
 
+### design of Knights used
+
+    During development, different styles of the chess piece were sourced and edited for use. When it came to
+    a decision to pick one, the designer decided to keep all three, and let the code randomly decide which set to use.
+
+![Knights Design](documentation/testing/knights.png)
+
 ### Instructions and Results
     
     The Instructions and results are shown in the same space in order that when played on smaller displays the end of game results are visible.
